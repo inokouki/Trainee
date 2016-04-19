@@ -9,8 +9,10 @@ import java.util.HashMap;
 
 public class Kadai3 {
 	public static void main(String[] args) throws IOException{
+		//エラーの種類を判断する//
+		int er = 0;
 		try{
-			String store1[], store2[];
+			String store1[] = null, store2[] = null;
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -38,7 +40,9 @@ public class Kadai3 {
 
 			//支店コード、支店名に分解//
 			while(str1 != null){
+				er = 1;
 				shop1.add(str1);
+
 				store1 = str1.split(",");
 
 				Map1.put(store1[0],store1[1]);
@@ -60,6 +64,7 @@ public class Kadai3 {
 
 			//商品コード、商品名に分解//
 			while(str2 != null){
+				er = 2;
 				shop2.add(str2);
 				store2 = str2.split(",");
 
@@ -69,21 +74,32 @@ public class Kadai3 {
 				System.out.println(store2[0] + "," + store2[1]);
 			}
 			br2.close();
+			er = 0;
 		}
 
 		//branch.lstが見つからなかったとき//
 		catch(FileNotFoundException e){
 			System.err.println("支店定義ファイルが存在しません");
+			System.exit(0);
 		}
 
 		//入出力の際に問題があったとき//
 		catch(IOException e){
 			System.out.println(e);
+			System.exit(0);
 		}
 
 		//支店定義ファイルに区切りの","がなかったとき//
 		catch(ArrayIndexOutOfBoundsException e){
+			if(er == 1){
 			System.err.println("支店定義ファイルのフォーマットが不正です");
+			System.err.println("branch.lstファイルを確認してください");
+			System.exit(0);
+			} else if(er == 2){
+				System.err.println("商品定義ファイルのフォーマットが不正です");
+				System.err.println("commodity.lstファイルを確認してください");
+				System.exit(0);
+			}
 		}
 	}
 }
