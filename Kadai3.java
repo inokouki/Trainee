@@ -11,7 +11,9 @@ import java.util.HashMap;
 public class Kadai3 {
 	public static void main(String[] args) throws IOException{
 		//エラーの種類を判断する//
-		int er = 0;
+		int er = 0, count = 0, i = 0, j = 0;
+		int storevalue001 = 0, storevalue002 = 0, storevalue003 = 0, storevalue = 004;
+		String[] data = new String[200];
 		try{
 			String store1[] = null, store2[] = null;
 
@@ -83,15 +85,35 @@ public class Kadai3 {
 			//コマンドライン引数のディレクトリをオープン//
 			File dir3 = new File(args[0]);
 
-			//フィルタクラスで探す//
-			String []files = dir3.list(new Filter());
+			//フィルタクラスで.rcdのファイル形式のみfilesに入れる//
+			String[]files = dir3.list(new Filter());
 
-			//全て出力//
-			for(int i=0; i<files.length; ++i){
-				System.out.println(files[i]);
+			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
+
+			for(i = 0; i<files.length ; i++){
+				String line;
+				FileReader fr3 = new FileReader(args[0] + File.separator + files[i]);
+				BufferedReader br3 =
+						new BufferedReader(fr3);
+				while((line = br3.readLine()) != null){
+					data[count] = line;
+					System.out.println(count + ":" + data[count]);
+					count++;
+				}
+				System.out.println();
+				br3.close();
+				fr3.close();
 			}
 
-
+			for(j = 0 ; j < count ; j++){
+				if(j % 3 == 0){
+					if(data[j] == "001"){
+						storevalue001 += Integer.parseInt(data[j+2]);
+						System.out.println("storevalue001: " + storevalue);
+					}
+				}
+				System.out.println("for: " + j + "回目");
+			}
 		}
 
 		//branch.lstが見つからなかったとき//
@@ -129,8 +151,8 @@ class Filter implements FilenameFilter{
 		        //"."以下の文字列を取り出して全て小文字に
 		        String ext = name.substring(index+1).toLowerCase();
 
-		        //拡張子が"rcd"と一致すれば取り出す
-		        if(ext.equals("rcd") == true) {return true;}
+		        //拡張子が"rcd"と一致、かつファイル名が12文字のとき取り出す
+		        if(ext.equals("rcd") == true && name.length() == 12) {return true;}
 
 		        //それ以外のファイルはリストアップしない
 		        return false;
