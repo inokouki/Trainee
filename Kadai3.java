@@ -10,8 +10,7 @@ import java.util.HashMap;
 public class Kadai3 {
 	public static void main(String[] args) throws IOException{
 		try{
-			int i = 1;
-			String store[];
+			String store1[], store2[];
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -29,30 +28,47 @@ public class Kadai3 {
 			}
 
 			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
-			BufferedReader br =
+			BufferedReader br1 =
 					new BufferedReader(new FileReader(args[0] + File.separator + "branch.lst"));
-			String str = br.readLine();
+			String str1 = br1.readLine();
 
 			//ハッシュマップ作成//
-			ArrayList<String> shop = new ArrayList<String>();
-			HashMap<String, String> Map = new HashMap<String, String>();
+			ArrayList<String> shop1 = new ArrayList<String>();
+			HashMap<String, String> Map1 = new HashMap<String, String>();
 
 			//支店コード、支店名に分解//
-			while(str != null){
-				shop.add(str);
-				store = str.split(",");
+			while(str1 != null){
+				shop1.add(str1);
+				store1 = str1.split(",");
 
-				Map.put(store[0],store[1]);
+				Map1.put(store1[0],store1[1]);
 
-				str = br.readLine();
-
-				i++;
+				str1 = br1.readLine();
+				System.out.println(store1[0] + "," + store1[1]);
 			}
-			//ハッシュマップのキーを元に、要素名を出力//
-			System.out.println(Map.keySet());
-			System.out.println(Map.values());
+			br1.close();
+			System.out.println();
 
-			br.close();
+			//商品定義//
+			BufferedReader br2 =
+					new BufferedReader(new FileReader(args[0] + File.separator + "commodity.lst"));
+			String str2 = br2.readLine();
+
+			//ハッシュマップ作成//
+			ArrayList<String> shop2 = new ArrayList<String>();
+			HashMap<String, String> Map2 = new HashMap<String, String>();
+
+			//商品コード、商品名に分解//
+			while(str2 != null){
+				shop2.add(str2);
+				store2 = str2.split(",");
+
+				Map2.put(store2[0],store2[1]);
+
+				str2 = br2.readLine();
+				System.out.println(store2[0] + "," + store2[1]);
+			}
+			br2.close();
 		}
 
 		//branch.lstが見つからなかったとき//
