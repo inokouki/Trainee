@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +76,22 @@ public class Kadai3 {
 			}
 			br2.close();
 			er = 0;
+			System.out.println();
+
+			//集計//
+
+			//コマンドライン引数のディレクトリをオープン//
+			File dir3 = new File(args[0]);
+
+			//フィルタクラスで探す//
+			String []files = dir3.list(new Filter());
+
+			//全て出力//
+			for(int i=0; i<files.length; ++i){
+				System.out.println(files[i]);
+			}
+
+
 		}
 
 		//branch.lstが見つからなかったとき//
@@ -102,4 +119,20 @@ public class Kadai3 {
 			}
 		}
 	}
+}
+
+class Filter implements FilenameFilter{
+	public boolean accept(File dir, String name) {
+
+		        int index = name.lastIndexOf(".");//拡張子の"."を探す
+
+		        //"."以下の文字列を取り出して全て小文字に
+		        String ext = name.substring(index+1).toLowerCase();
+
+		        //拡張子が"rcd"と一致すれば取り出す
+		        if(ext.equals("rcd") == true) {return true;}
+
+		        //それ以外のファイルはリストアップしない
+		        return false;
+		    }
 }
