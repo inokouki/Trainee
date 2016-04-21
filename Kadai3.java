@@ -116,28 +116,35 @@ public class Kadai3 {
 				}
 			}
 			System.out.println("ファイル名: " + sucnum);
+			System.out.println();
 
 
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 
 			for(int i = 0; i<files.length ; i++){
+				int icount = 0;
 				String line;
 				FileReader calcfr = new FileReader(args[0] + File.separator + files[i]);
 				BufferedReader calcbr =
 						new BufferedReader(calcfr);
 				while((line = calcbr.readLine()) != null){
-					data.add(line);
-					//System.out.println(count + ":" + data);
+					if(icount < 3){
+						data.add(line);
+						icount++;
+					} else {
+						System.err.println(files[i] + "のフォーマットが不正です");
+						System.exit(0);
+					}
 					count++;
 				}
-				System.out.println();
-
 			}
+			//System.out.println(count + ":" + data);
+			//System.out.println();
 
 			for(int j = 0 ; j < count ; j++){
 				if(j % 3 == 0){
 					if(data.get(j) == "001"){
-						System.out.println(j + "回目のif文通過");
+						//System.out.println(j + "回目のif文通過");
 					}
 				}
 				//System.out.println("for: " + j + "回目");
@@ -163,11 +170,9 @@ public class Kadai3 {
 		catch(ArrayIndexOutOfBoundsException e){
 			if(er == 1){
 			System.err.println("支店定義ファイルのフォーマットが不正です");
-			System.err.println("branch.lstファイルを確認してください");
 			System.exit(0);
 			} else if(er == 2){
 				System.err.println("商品定義ファイルのフォーマットが不正です");
-				System.err.println("commodity.lstファイルを確認してください");
 				System.exit(0);
 			}
 		}
