@@ -6,16 +6,23 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Kadai3 {
+	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
+
 	public static void main(String[] args) throws IOException{
 		//エラーの種類を判断する//
-		int er = 0, count = 0, i = 0, j = 0;
-		int storevalue001 = 0, storevalue002 = 0, storevalue003 = 0, storevalue = 004;
-		String[] data = new String[200];
+		int er = 0;
+
 		try{
-			String store1[] = null, store2[] = null;
+			String storearray[] = null, goodsarray[] = null;
+			int count = 0, valuetemp = 0;
+			List<String> data = new ArrayList<String>();
+			List<String> sucnum = new ArrayList<String>();
+			String[] tempstr = null;
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -33,87 +40,98 @@ public class Kadai3 {
 			}
 
 			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
-			BufferedReader br1 =
+			BufferedReader storebr =
 					new BufferedReader(new FileReader(args[0] + File.separator + "branch.lst"));
-			String str1 = br1.readLine();
+			String storestr = storebr.readLine();
 
 			//ハッシュマップ作成//
-			ArrayList<String> shop1 = new ArrayList<String>();
-			HashMap<String, String> Map1 = new HashMap<String, String>();
+			ArrayList<String> store = new ArrayList<String>();
+			HashMap<String, String> storemap = new HashMap<String, String>();
 
 			//支店コード、支店名に分解//
-			while(str1 != null){
+			while(storestr != null){
 				er = 1;
-				shop1.add(str1);
+				store.add(storestr);
 
-				store1 = str1.split(",");
+				storearray = storestr.split(",");
 
-				Map1.put(store1[0],store1[1]);
+				storemap.put(storearray[0],storearray[1]);
 
-				str1 = br1.readLine();
-				System.out.println(store1[0] + "," + store1[1]);
+				storestr = storebr.readLine();
+				System.out.println(storearray[0] + "," + storearray[1]);
 			}
-			br1.close();
+			storebr.close();
 			System.out.println();
 
 			//商品定義//
-			BufferedReader br2 =
+			BufferedReader goodsbr =
 					new BufferedReader(new FileReader(args[0] + File.separator + "commodity.lst"));
-			String str2 = br2.readLine();
+			String goodsstr = goodsbr.readLine();
 
 			//ハッシュマップ作成//
-			ArrayList<String> shop2 = new ArrayList<String>();
-			HashMap<String, String> Map2 = new HashMap<String, String>();
+			ArrayList<String> goods = new ArrayList<String>();
+			HashMap<String, String> goodsmap = new HashMap<String, String>();
 
 			//商品コード、商品名に分解//
-			while(str2 != null){
+			while(goodsstr != null){
 				er = 2;
-				shop2.add(str2);
-				store2 = str2.split(",");
+				goods.add(goodsstr);
+				goodsarray = goodsstr.split(",");
 
-				Map2.put(store2[0],store2[1]);
+				goodsmap.put(goodsarray[0],goodsarray[1]);
 
-				str2 = br2.readLine();
-				System.out.println(store2[0] + "," + store2[1]);
+				goodsstr = goodsbr.readLine();
+				System.out.println(goodsarray[0] + "," + goodsarray[1]);
 			}
-			br2.close();
+			goodsbr.close();
 			er = 0;
 			System.out.println();
 
 			//集計//
 
 			//コマンドライン引数のディレクトリをオープン//
-			File dir3 = new File(args[0]);
+			File calcfile = new File(args[0]);
 
-			//フィルタクラスで.rcdのファイル形式のみfilesに入れる//
-			String[]files = dir3.list(new Filter());
+			//フィルタクラスで[8桁数字.rcd]のファイル形式のみfilesに入れる//
+			String[]files = calcfile.list(new Filter());
+			System.out.println(Arrays.asList(files));
+
+			//連番確認//
+			for(int k = 0 ; k < files.length ; k++){
+				for(int l = 0 ; l < 2 ; l++){
+					tempstr = files[k].split("\\.");
+					sucnum.add(tempstr[k]);
+					System.out.println("連番: " + sucnum.get(l));
+				}
+			}
 
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 
-			for(i = 0; i<files.length ; i++){
+			for(int i = 0; i<files.length ; i++){
 				String line;
-				FileReader fr3 = new FileReader(args[0] + File.separator + files[i]);
-				BufferedReader br3 =
-						new BufferedReader(fr3);
-				while((line = br3.readLine()) != null){
-					data[count] = line;
-					System.out.println(count + ":" + data[count]);
+				FileReader calcfr = new FileReader(args[0] + File.separator + files[i]);
+				BufferedReader calcbr =
+						new BufferedReader(calcfr);
+				while((line = calcbr.readLine()) != null){
+					data.add(line);
+					System.out.println(count + ":" + data);
 					count++;
 				}
 				System.out.println();
-				br3.close();
-				fr3.close();
+
 			}
 
-			for(j = 0 ; j < count ; j++){
+			for(int j = 0 ; j < count ; j++){
 				if(j % 3 == 0){
-					if(data[j] == "001"){
-						storevalue001 += Integer.parseInt(data[j+2]);
-						System.out.println("storevalue001: " + storevalue);
+					if(data.get(j) == "001"){
+						System.out.println(j + "回目のif文通過");
 					}
 				}
 				System.out.println("for: " + j + "回目");
 			}
+
+			if(calcbr != null) {calcbr.close();}
+			if(calcfr != null) {calcfr.close();}
 		}
 
 		//branch.lstが見つからなかったとき//
@@ -140,21 +158,23 @@ public class Kadai3 {
 				System.exit(0);
 			}
 		}
+
+		finally{
+			//close処理//
+			if(storebr != null) {storebr.close();}
+			if(goodsbr != null) {goodsbr.close();}
+			if(calcbr != null) {calcbr.close();}
+			if(calcfr != null) {calcfr.close();}
+
+			System.out.println();
+			System.out.println("処理終了");
+		}
 	}
 }
 
 class Filter implements FilenameFilter{
 	public boolean accept(File dir, String name) {
-
-		        int index = name.lastIndexOf(".");//拡張子の"."を探す
-
-		        //"."以下の文字列を取り出して全て小文字に
-		        String ext = name.substring(index+1).toLowerCase();
-
-		        //拡張子が"rcd"と一致、かつファイル名が12文字のとき取り出す
-		        if(ext.equals("rcd") == true && name.length() == 12) {return true;}
-
-		        //それ以外のファイルはリストアップしない
-		        return false;
-		    }
+        //拡張子が"rcd"と一致、かつファイル名が8桁の数字のとき取り出す
+		return name.matches("^\\d{8}.rcd$");
+    }
 }
