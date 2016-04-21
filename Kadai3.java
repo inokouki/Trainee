@@ -23,6 +23,7 @@ public class Kadai3 {
 			List<String> data = new ArrayList<String>();
 			List<String> sucnum = new ArrayList<String>();
 			String[] tempstr = null;
+			int filenametemp = 0;
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -94,16 +95,28 @@ public class Kadai3 {
 
 			//フィルタクラスで[8桁数字.rcd]のファイル形式のみfilesに入れる//
 			String[]files = calcfile.list(new Filter());
-			System.out.println(Arrays.asList(files));
+			System.out.println("フィルター後: " + Arrays.asList(files));
 
-			//連番確認//
+			//sucnumにファイル名である8桁の数字を格納//
 			for(int k = 0 ; k < files.length ; k++){
 				for(int l = 0 ; l < 2 ; l++){
-					tempstr = files[k].split("\\.");
-					sucnum.add(tempstr[k]);
-					System.out.println("連番: " + sucnum.get(l));
+					if(l == 0){
+						tempstr = files[k].split("\\.");
+						sucnum.add(tempstr[l]);
+					}
+				}
+
+				filenametemp = Integer.parseInt(sucnum.get(k));
+				System.out.println("filenametemp: " + filenametemp);
+
+				//売り上げファイル名が連番になっているかどうか検査//
+				if(filenametemp != k + 1){
+					System.err.println("売り上げファイル名が連番になっていません");
+					System.exit(0);
 				}
 			}
+			System.out.println("ファイル名: " + sucnum);
+
 
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 
@@ -114,7 +127,7 @@ public class Kadai3 {
 						new BufferedReader(calcfr);
 				while((line = calcbr.readLine()) != null){
 					data.add(line);
-					System.out.println(count + ":" + data);
+					//System.out.println(count + ":" + data);
 					count++;
 				}
 				System.out.println();
@@ -127,7 +140,7 @@ public class Kadai3 {
 						System.out.println(j + "回目のif文通過");
 					}
 				}
-				System.out.println("for: " + j + "回目");
+				//System.out.println("for: " + j + "回目");
 			}
 
 			if(calcbr != null) {calcbr.close();}
