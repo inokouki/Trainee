@@ -19,9 +19,11 @@ public class Kadai3 {
 
 		try{
 			String storearray[] = null, goodsarray[] = null;
-			int count = 0, valuetemp = 0;
+			int count = 0, valuetemp = 0, indexnum;
 			List<String> data = new ArrayList<String>();
 			List<String> sucnum = new ArrayList<String>();
+			List<String> storelist = new ArrayList<String>();
+			List<String> goodslist = new ArrayList<String>();
 			String[] tempstr = null;
 			int filenametemp = 0;
 			int storetempnum = 0;
@@ -64,7 +66,9 @@ public class Kadai3 {
 
 				storestr = storebr.readLine();
 				System.out.println(storearray[0] + "," + storearray[1]);
+				storelist.add(storearray[0]);
 			}
+			System.out.println("店名コード一覧: " + storelist);
 			storebr.close();
 			System.out.println();
 
@@ -87,9 +91,11 @@ public class Kadai3 {
 
 				goodsstr = goodsbr.readLine();
 				System.out.println(goodsarray[0] + "," + goodsarray[1]);
+				goodslist.add(goodsarray[0]);
 			}
 			goodsbr.close();
 			er = 0;
+			System.out.println("商品コード一覧: " + goodslist);
 			System.out.println();
 
 			//集計//
@@ -165,6 +171,13 @@ public class Kadai3 {
 						System.exit(0);
 					}
 
+					//存在しないときindexnumに-1が入る//
+					indexnum = storelist.indexOf(data.get(j));
+					if(indexnum == -1){
+						System.err.println(Arrays.asList(files[j/3]) + "の支店コードが不正です");
+						System.exit(0);
+					}
+
 					//既にマップが存在しているかどうか//
 					if(storecodemap.containsKey(data.get(j))){
 						strkeytemp = storecodemap.get(data.get(j));
@@ -194,6 +207,13 @@ public class Kadai3 {
 						System.exit(0);
 					}
 
+					//存在しないときindexnumに-1が入る//
+					indexnum = goodslist.indexOf(data.get(j));
+					if(indexnum == -1){
+						System.err.println(Arrays.asList(files[j/3]) + "の商品コードが不正です");
+						System.exit(0);
+					}
+
 					//既にマップが存在しているかどうか//
 					if(goodscodemap.containsKey(data.get(j))){
 						strkeytemp = goodscodemap.get(data.get(j));
@@ -206,9 +226,8 @@ public class Kadai3 {
 						valuestr = String.valueOf(valuetemp);
 						goodscodemap.put(data.get(j), valuestr);
 						System.out.println("商品コード: " + data.get(j) + " 金額: " + valuestr + "をセットしました");
-					}
-
 					System.out.println();
+					}
 				}
 			}
 
@@ -237,7 +256,8 @@ public class Kadai3 {
 			}
 		}
 
-		catch(NumberFormatException e){
+		catch(Exception e){
+			System.err.println("予期せぬエラーが発生しました");
 		}
 
 		finally{
