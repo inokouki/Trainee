@@ -2,9 +2,12 @@ package jp.co.iccom.ino_kouki.calculate_sales;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +32,8 @@ public class Kadai3 {
 			String valuestr;
 			HashMap<String, String> storecodemap = new HashMap<String, String>();
 			HashMap<String, String> goodscodemap = new HashMap<String, String>();
+			HashMap<String, String> newstoremap = new HashMap<String, String>();
+			HashMap<String, String> newgoodsmap = new HashMap<String, String>();
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -187,7 +192,7 @@ public class Kadai3 {
 						}
 
 						storecodemap.put(data.get(j), strkeytemp);
-						System.out.println("キーが見つかりました: " + longkeytemp);
+						System.out.println("キー発見: " + storecodemap.get(data.get(j)));
 					} else {
 						valuestr = String.valueOf(valuetemp);
 
@@ -254,8 +259,74 @@ public class Kadai3 {
 				}
 			}
 
+			System.out.println();
+			System.out.println("出力前まで");
+			System.out.println();
+
 			if(calcbr != null) {calcbr.close();}
 			if(calcfr != null) {calcfr.close();}
+
+			//支店別集計ファイル[branch.out]を降順で出力する//
+
+			//支店別の売り上げ確認(5回実行)//
+			System.out.println("支店別の並び替え前");
+			for(int x = 0 ; x < storelist.size() ; x++){
+				if(storecodemap.get(storelist.get(x)) == null){
+					storecodemap.put(storelist.get(x), "0");
+				}
+				System.out.println(storelist.get(x) + ":" + storecodemap.get(storelist.get(x)));
+			}
+			System.out.println();
+
+			//支店別売り上げの並び替え//
+			for(int x = 0 ; x < storelist.size() - 1 ; x++){
+				long before = 0, after = 0 , temp = 0;
+				String beforetempname = null, aftertempname = null;
+				int beforecount = -1;
+
+				before = Long.parseLong(storecodemap.get(storelist.get(x)));
+
+				for(int y = x + 1 ; y < storelist.size() ; y++){
+					after = Long.parseLong(storecodemap.get(storelist.get(y)));
+					System.out.println("x=" + x + ",y=" + y + "のとき" + before + ":" + after);
+
+					if(before < after){
+						temp = before;
+						before = after;
+						after = temp;
+						aftertempname = String.valueOf(after);
+						storecodemap.put(storelist.get(y), aftertempname);
+						beforecount = y;
+					}
+
+					if(beforecount == -1){
+						beforecount = x;
+					}
+
+					beforetempname = String.valueOf(before);
+				}
+				System.out.println(beforecount + ":" + beforetempname + ":" + storelist.get(beforecount));
+				newstoremap.put(storelist.get(x), beforetempname);
+			}
+
+			if(newstoremap.size() < storecodemap.size()){
+
+			}
+
+			//支店別の売り上げの並び替え終了後//
+			System.out.println("支店別の並び替え後");
+			System.out.println(newstoremap.keySet() + ":" + newstoremap.values());
+			System.out.println();
+
+
+			//出力ファイル名を作成、ファイルオブジェクトの生成//
+			String outputStoreFileName = "branch.out";
+			File outputStoreFile = new File(outputStoreFileName);
+
+			//出力ストリームの作成//
+			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
+			OutputStreamWriter storeosw = new OutputStreamWriter(storefos);
+			PrintWriter storepw = new PrintWriter(storeosw);
 		}
 
 		//branch.lstが見つからなかったとき//
@@ -292,6 +363,9 @@ public class Kadai3 {
 			if(goodsbr != null) {goodsbr.close();}
 			if(calcbr != null) {calcbr.close();}
 			if(calcfr != null) {calcfr.close();}
+
+			System.out.println();
+			System.out.println("処理終了");
 		}
 	}
 }
