@@ -19,14 +19,13 @@ public class Kadai3 {
 
 		try{
 			String storearray[] = null, goodsarray[] = null;
-			int count = 0, valuetemp = 0, indexnum;
+			int count = 0, indexnum, filenametemp = 0;
 			List<String> data = new ArrayList<String>();
 			List<String> sucnum = new ArrayList<String>();
 			List<String> storelist = new ArrayList<String>();
 			List<String> goodslist = new ArrayList<String>();
 			String[] tempstr = null;
-			int filenametemp = 0;
-			int storetempnum = 0;
+			long storetempnum = 0, valuetemp = 0;
 			String valuestr;
 			HashMap<String, String> storecodemap = new HashMap<String, String>();
 			HashMap<String, String> goodscodemap = new HashMap<String, String>();
@@ -43,7 +42,7 @@ public class Kadai3 {
 			//コマンドライン引数がディレクトリ以外のとき//
 			if(!dir.isDirectory()){
 				System.err.println("引数にディレクトリパスが入っていません");
-				System.exit(0);
+				return;
 			}
 
 			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
@@ -104,6 +103,7 @@ public class Kadai3 {
 			File calcfile = new File(args[0]);
 
 			//フィルタクラスで[8桁数字.rcd]のファイル形式のみfilesに入れる//
+			File[] filearray = calcfile.listFiles();
 			String[]files = calcfile.list(new Filter());
 			System.out.println("フィルター後: " + Arrays.asList(files));
 
@@ -119,11 +119,12 @@ public class Kadai3 {
 				filenametemp = Integer.parseInt(sucnum.get(k));
 				System.out.println("filenametemp: " + filenametemp);
 
-				//売り上げファイル名が連番になっているかどうか検査//
-				if(filenametemp != k + 1){
+				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
+				if(filenametemp != k + 1 || filearray[k].isDirectory()){
 					System.err.println("売り上げファイル名が連番になっていません");
-					System.exit(0);
+					return;
 				}
+
 			}
 			System.out.println("ファイル名: " + sucnum);
 			System.out.println();
@@ -143,7 +144,7 @@ public class Kadai3 {
 						icount++;
 					} else {
 						System.err.println(files[i] + "のフォーマットが不正です");
-						System.exit(0);
+						return;
 					}
 					count++;
 				}
@@ -153,41 +154,49 @@ public class Kadai3 {
 
 			for(int j = 0 ; j < count ; j++){
 				String strkeytemp = null;
-				int intkeytemp;
+				long longkeytemp;
 
 				//支店コード//
 				if(j % 3 == 0){
 					System.out.println("j%3=0");
 					//int型に変換//
 					storetempnum = Integer.parseInt(data.get(j));
-					valuetemp = Integer.parseInt(data.get(j+2));
+					valuetemp = Long.parseLong(data.get(j+2));
 
 					System.out.println("storetempnum: " + storetempnum);
 					System.out.println("valuetemp: " + valuetemp);
-
-					//入力売り上げが10桁以上のときエラー処理//
-					if(valuetemp > 999999999){
-						System.err.println("合計金額が10桁を超えました");
-						System.exit(0);
-					}
 
 					//存在しないときindexnumに-1が入る//
 					indexnum = storelist.indexOf(data.get(j));
 					if(indexnum == -1){
 						System.err.println(Arrays.asList(files[j/3]) + "の支店コードが不正です");
-						System.exit(0);
+						return;
 					}
 
 					//既にマップが存在しているかどうか//
 					if(storecodemap.containsKey(data.get(j))){
 						strkeytemp = storecodemap.get(data.get(j));
-						intkeytemp = Integer.parseInt(strkeytemp);
-						intkeytemp = intkeytemp + valuetemp;
-						strkeytemp = String.valueOf(intkeytemp);
+						longkeytemp = Long.parseLong(strkeytemp);
+						longkeytemp = longkeytemp + valuetemp;
+						strkeytemp = String.valueOf(longkeytemp);
+
+						//合計売り上げが11桁以上のときエラー処理//
+						if(strkeytemp.matches("^\\d{11,}")){
+							System.err.println("合計金額が10桁を超えました");
+							return;
+						}
+
 						storecodemap.put(data.get(j), strkeytemp);
-						System.out.println("キーが見つかりました: " + intkeytemp);
+						System.out.println("キーが見つかりました: " + longkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
+
+						//合計売り上げが11桁以上のときエラー処理//
+						if(valuestr.matches("^\\d{11,}")){
+							System.err.println("合計金額が10桁を超えました");
+							return;
+						}
+
 						storecodemap.put(data.get(j), valuestr);
 						System.out.println("キーが見つかりませんでした。マップを作成します");
 					}
@@ -201,29 +210,43 @@ public class Kadai3 {
 					System.out.println("storetempnum: " + storetempnum);
 					System.out.println("valuetemp: " + valuetemp);
 
-					//入力売り上げが10桁以上のときエラー処理//
-					if(valuetemp > 999999999){
-						System.err.println("合計金額が10桁を超えました");
-						System.exit(0);
-					}
-
 					//存在しないときindexnumに-1が入る//
 					indexnum = goodslist.indexOf(data.get(j));
 					if(indexnum == -1){
 						System.err.println(Arrays.asList(files[j/3]) + "の商品コードが不正です");
-						System.exit(0);
+						return;
 					}
 
 					//既にマップが存在しているかどうか//
 					if(goodscodemap.containsKey(data.get(j))){
 						strkeytemp = goodscodemap.get(data.get(j));
-						intkeytemp = Integer.parseInt(strkeytemp);
-						intkeytemp = intkeytemp + valuetemp;
-						strkeytemp = String.valueOf(intkeytemp);
+						longkeytemp = Long.parseLong(strkeytemp);
+						longkeytemp = longkeytemp + valuetemp;
+						strkeytemp = String.valueOf(longkeytemp);
+
+						//合計売り上げが11桁以上のときエラー処理//
+						if(strkeytemp.matches("^\\d{11,}")){
+							System.err.println("合計金額が10桁を超えました");
+							return;
+						}
+
+						//合計売り上げが11桁以上のときエラー処理//
+						if(strkeytemp.matches("^\\d{11,}")){
+							System.err.println("合計金額が10桁を超えました");
+							return;
+						}
+
 						goodscodemap.put(data.get(j), strkeytemp);
 						System.out.println("商品コード: " + data.get(j) + " 合計金額: " + strkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
+
+						//合計売り上げが11桁以上のときエラー処理//
+						if(valuestr.matches("^\\d{11,}")){
+							System.err.println("合計金額が10桁を超えました");
+							return;
+						}
+
 						goodscodemap.put(data.get(j), valuestr);
 						System.out.println("商品コード: " + data.get(j) + " 金額: " + valuestr + "をセットしました");
 					System.out.println();
@@ -238,26 +261,29 @@ public class Kadai3 {
 		//branch.lstが見つからなかったとき//
 		catch(FileNotFoundException e){
 			System.err.println("支店定義ファイルが存在しません");
-			System.exit(0);
+			return;
 		}
 
 		//入出力の際に問題があったとき//
 		catch(IOException e){
 			System.out.println(e);
-			System.exit(0);
+			return;
 		}
 
 		//支店定義ファイルに区切りの","がなかったとき//
 		catch(ArrayIndexOutOfBoundsException e){
 			if(er == 1){
 			System.err.println("支店定義ファイルのフォーマットが不正です");
+			return;
 			} else if(er == 2){
 				System.err.println("商品定義ファイルのフォーマットが不正です");
+				return;
 			}
 		}
 
 		catch(Exception e){
 			System.err.println("予期せぬエラーが発生しました");
+			return;
 		}
 
 		finally{
@@ -274,5 +300,5 @@ class Filter implements FilenameFilter{
 	public boolean accept(File dir, String name) {
         //拡張子が"rcd"と一致、かつファイル名が8桁の数字のとき取り出す
 		return name.matches("^\\d{8}.rcd$");
-    }
+	}
 }
