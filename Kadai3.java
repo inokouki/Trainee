@@ -31,15 +31,14 @@ public class Kadai3 {
 		//支店ファイル読み込み//
 		try{
 			String storearray[] = null;
+			File dir = null;
 
-			//コマンドライン引数をpathに代入//
-			String path = ".";
-			if(args.length != 0){
-				path = args[0];
+			if(args.length == 1){
+				dir = new File(args[0]);
+			} else {
+				System.err.println("予期せぬエラーが発生しました");
+				return;
 			}
-
-			//パスをファイル型に変換//
-			File dir = new File(path);
 
 			//コマンドライン引数がディレクトリ以外のとき//
 			if(!dir.isDirectory()){
@@ -49,7 +48,7 @@ public class Kadai3 {
 
 			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
 			BufferedReader storebr =
-					new BufferedReader(new FileReader(args[0] + File.separator + "branch.lst"));
+					new BufferedReader(new FileReader(args[0] + File.separator + "\\branch.lst"));
 			String storestr = storebr.readLine();
 
 			//ハッシュマップ作成//
@@ -61,11 +60,17 @@ public class Kadai3 {
 				store.add(storestr);
 				storearray = storestr.split(",");
 
+				if(!storearray[0].matches("\\d{3}")){
+					System.err.println("支店定義ファイルのフォーマットが不正です");
+					return;
+				}
+
 				storemap.put(storearray[0],storearray[1]);
-				storestr = storebr.readLine();
 				storelist.add(storearray[0]);
 				storelistname.add(storearray[1]);
+				storestr = storebr.readLine();
 			}
+			storebr.close();
 		}
 
 		catch(FileNotFoundException e){
@@ -86,7 +91,7 @@ public class Kadai3 {
 			String goodsarray[] = null;
 
 			BufferedReader goodsbr =
-					new BufferedReader(new FileReader(args[0] + File.separator + "commodity.lst"));
+					new BufferedReader(new FileReader(args[0] + File.separator + "\\commodity.lst"));
 			String goodsstr = goodsbr.readLine();
 
 			//ハッシュマップ作成//
@@ -99,9 +104,13 @@ public class Kadai3 {
 				goodsarray = goodsstr.split(",");
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
-				goodsstr = goodsbr.readLine();
+				if(!goodsarray[0].matches("SFT\\d{5}")){
+					System.err.println("商品定義ファイルのフォーマットが不正です");
+					return;
+				}
 				goodslist.add(goodsarray[0]);
 				goodslistname.add(goodsarray[1]);
+				goodsstr = goodsbr.readLine();
 			}
 		}
 
@@ -135,18 +144,18 @@ public class Kadai3 {
 			String[]files = calcfile.list(new Filter());
 
 			//sucnumにファイル名である8桁の数字を格納//
-			for(int k = 0 ; k < files.length ; k++){
-				for(int l = 0 ; l < 2 ; l++){
-					if(l == 0){
-						tempstr = files[k].split("\\.");
-						sucnum.add(tempstr[l]);
+			for(int i = 0 ; i < files.length ; i++){
+				for(int j = 0 ; j < 2 ; j++){
+					if(j == 0){
+						tempstr = files[i].split("\\.");
+						sucnum.add(tempstr[j]);
 					}
 				}
 
-				filenametemp = Integer.parseInt(sucnum.get(k));
+				filenametemp = Integer.parseInt(sucnum.get(i));
 
 				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
-				if(filenametemp != k + 1 || filearray[k].isDirectory()){
+				if(filenametemp != i + 1 || filearray[i].isDirectory()){
 					System.err.println("売り上げファイル名が連番になっていません");
 					return;
 				}
@@ -171,27 +180,27 @@ public class Kadai3 {
 				}
 			}
 
-			for(int j = 0 ; j < count ; j++){
+			for(int i = 0 ; i < count ; i++){
 				String strkeytemp = null;
 				long longkeytemp;
 				long storetempnum = 0;
 
 				//支店コード//
-				if(j % 3 == 0){
+				if(i % 3 == 0){
 					//int型に変換//
-					storetempnum = Integer.parseInt(data.get(j));
-					valuetemp = Long.parseLong(data.get(j+2));
+					storetempnum = Integer.parseInt(data.get(i));
+					valuetemp = Long.parseLong(data.get(i+2));
 
 					//存在しないときindexnumに-1が入る//
-					indexnum = storelist.indexOf(data.get(j));
+					indexnum = storelist.indexOf(data.get(i));
 					if(indexnum == -1){
-						System.err.println(Arrays.asList(files[j/3]) + "の支店コードが不正です");
+						System.err.println(Arrays.asList(files[i/3]) + "の支店コードが不正です");
 						return;
 					}
 
 					//既にマップが存在しているかどうか//
-					if(storecodemap.containsKey(data.get(j))){
-						strkeytemp = storecodemap.get(data.get(j));
+					if(storecodemap.containsKey(data.get(i))){
+						strkeytemp = storecodemap.get(data.get(i));
 						longkeytemp = Long.parseLong(strkeytemp);
 						longkeytemp = longkeytemp + valuetemp;
 						strkeytemp = String.valueOf(longkeytemp);
@@ -201,7 +210,7 @@ public class Kadai3 {
 							System.err.println("合計金額が10桁を超えました");
 							return;
 						}
-						storecodemap.put(data.get(j), strkeytemp);
+						storecodemap.put(data.get(i), strkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
 
@@ -210,21 +219,21 @@ public class Kadai3 {
 							System.err.println("合計金額が10桁を超えました");
 							return;
 						}
-						storecodemap.put(data.get(j), valuestr);
+						storecodemap.put(data.get(i), valuestr);
 					}
 				}
 
 				//商品コード//
-				if(j % 3 == 1){
+				if(i % 3 == 1){
 					//存在しないときindexnumに-1が入る//
-					indexnum = goodslist.indexOf(data.get(j));
+					indexnum = goodslist.indexOf(data.get(i));
 					if(indexnum == -1){
 						return;
 					}
 
 					//既にマップが存在しているかどうか//
-					if(goodscodemap.containsKey(data.get(j))){
-						strkeytemp = goodscodemap.get(data.get(j));
+					if(goodscodemap.containsKey(data.get(i))){
+						strkeytemp = goodscodemap.get(data.get(i));
 						longkeytemp = Long.parseLong(strkeytemp);
 						longkeytemp = longkeytemp + valuetemp;
 						strkeytemp = String.valueOf(longkeytemp);
@@ -235,7 +244,7 @@ public class Kadai3 {
 							return;
 						}
 
-						goodscodemap.put(data.get(j), strkeytemp);
+						goodscodemap.put(data.get(i), strkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
 
@@ -245,7 +254,7 @@ public class Kadai3 {
 							return;
 						}
 
-						goodscodemap.put(data.get(j), valuestr);
+						goodscodemap.put(data.get(i), valuestr);
 					}
 				}
 			}
@@ -264,7 +273,7 @@ public class Kadai3 {
 		//ファイル出力//
 		try{
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputStoreFileName = args[0] + "\\branch.out";
+			String outputStoreFileName = args[0] + File.separator + "\\branch.out";
 			File outputStoreFile = new File(outputStoreFileName);
 
 			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
@@ -272,7 +281,7 @@ public class Kadai3 {
 			PrintWriter storepw = new PrintWriter(outputStoreFileName);
 
 			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputGoodsFileName = args[0] + "\\commodity.out";
+			String outputGoodsFileName = args[0] + File.separator + "\\commodity.out";
 			File outputGoodsFile = new File(outputGoodsFileName);
 
 			FileOutputStream goodsfos = new FileOutputStream(outputGoodsFile);
@@ -280,9 +289,9 @@ public class Kadai3 {
 			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
 
 			//支店別の売り上げ確認//
-			for(int x = 0 ; x < storelist.size() ; x++){
-				if(storecodemap.get(storelist.get(x)) == null){
-					storecodemap.put(storelist.get(x), "0");
+			for(int i = 0 ; i < storelist.size() ; i++){
+				if(storecodemap.get(storelist.get(i)) == null){
+					storecodemap.put(storelist.get(i), "0");
 				}
 			}
 
@@ -319,9 +328,9 @@ public class Kadai3 {
 		        storepw.close();
 
 				//商品別の売り上げ確認//
-				for(int x = 0 ; x < goodslist.size() ; x++){
-					if(goodscodemap.get(goodslist.get(x)) == null){
-						goodscodemap.put(goodslist.get(x), "0");
+				for(int i = 0 ; i < goodslist.size() ; i++){
+					if(goodscodemap.get(goodslist.get(i)) == null){
+						goodscodemap.put(goodslist.get(i), "0");
 					}
 				}
 
