@@ -46,7 +46,7 @@ public class Kadai3 {
 
 			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
 			BufferedReader storebr =
-					new BufferedReader(new FileReader(args[0] + File.separator + "\\branch.lst"));
+					new BufferedReader(new FileReader(args[0] + File.separator + "branch.lst"));
 			String storestr = storebr.readLine();
 
 			//ハッシュマップ作成//
@@ -90,7 +90,7 @@ public class Kadai3 {
 			String goodsarray[] = null;
 
 			BufferedReader goodsbr =
-					new BufferedReader(new FileReader(args[0] + File.separator + "\\commodity.lst"));
+					new BufferedReader(new FileReader(args[0] + File.separator + "commodity.lst"));
 			String goodsstr = goodsbr.readLine();
 
 			//ハッシュマップ作成//
@@ -103,7 +103,7 @@ public class Kadai3 {
 				goodsarray = goodsstr.split(",");
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
-				if(!goodsarray[0].matches("SFT\\d{5}")){
+				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}")){
 					System.out.println("商品定義ファイルのフォーマットが不正です");
 					goodsbr.close();
 					return;
@@ -273,11 +273,11 @@ public class Kadai3 {
 		//ファイル出力//
 		try{
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputStoreFileName = args[0] + File.separator + "\\branch.out";
+			String outputStoreFileName = args[0] + File.separator + "branch.out";
 			PrintWriter storepw = new PrintWriter(outputStoreFileName);
 
 			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputGoodsFileName = args[0] + File.separator + "\\commodity.out";
+			String outputGoodsFileName = args[0] + File.separator + "commodity.out";
 			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
 
 			//支店別の売り上げ確認//
@@ -316,7 +316,6 @@ public class Kadai3 {
 		            number = Integer.parseInt(s.getKey()) - 1;
 			        storepw.println(s.getKey() + "," + storelistname.get(number) + "," + s.getValue());
 		        }
-		        System.out.println("支店ファイル出力完了");
 		        storepw.close();
 
 				//商品別の売り上げ確認//
@@ -358,7 +357,6 @@ public class Kadai3 {
 			            }
 				        goodspw.println(t.getKey() + "," + goodslistname.get(intnumber) + "," + t.getValue());
 			        }
-			        System.out.println("商品ファイル出力完了");
 			        goodspw.close();
 		}
 
@@ -368,8 +366,6 @@ public class Kadai3 {
 		}
 
 		finally{
-			System.out.println();
-			System.out.println("売り上げ集計システム:処理終了");
 		}
 	}
 }
