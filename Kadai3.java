@@ -34,13 +34,13 @@ public class Kadai3 {
 			if(args.length == 1){
 				dir = new File(args[0]);
 			} else {
-				System.err.println("予期せぬエラーが発生しました");
+				System.out.println("予期せぬエラーが発生しました");
 				return;
 			}
 
 			//コマンドライン引数がディレクトリ以外のとき//
 			if(!dir.isDirectory()){
-				System.err.println("予期せぬエラーが発生しました");
+				System.out.println("予期せぬエラーが発生しました");
 				return;
 			}
 
@@ -59,7 +59,7 @@ public class Kadai3 {
 				storearray = storestr.split(",");
 
 				if(!storearray[0].matches("\\d{3}")){
-					System.err.println("支店定義ファイルのフォーマットが不正です");
+					System.out.println("支店定義ファイルのフォーマットが不正です");
 					storebr.close();
 					return;
 				}
@@ -73,12 +73,12 @@ public class Kadai3 {
 		}
 
 		catch(FileNotFoundException e){
-			System.err.println("支店定義ファイルが存在しません");
+			System.out.println("支店定義ファイルが存在しません");
 			return;
 		}
 
 		catch(ArrayIndexOutOfBoundsException e){
-			System.err.println("支店定義ファイルのフォーマットが不正です");
+			System.out.println("支店定義ファイルのフォーマットが不正です");
 			return;
 		}
 		finally{
@@ -104,7 +104,7 @@ public class Kadai3 {
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
 				if(!goodsarray[0].matches("SFT\\d{5}")){
-					System.err.println("商品定義ファイルのフォーマットが不正です");
+					System.out.println("商品定義ファイルのフォーマットが不正です");
 					goodsbr.close();
 					return;
 				}
@@ -115,12 +115,12 @@ public class Kadai3 {
 		}
 
 		catch(FileNotFoundException e){
-			System.err.println("商品定義ファイルが存在しません");
+			System.out.println("商品定義ファイルが存在しません");
 			return;
 		}
 
 		catch(ArrayIndexOutOfBoundsException e){
-			System.err.println("商品定義ファイルのフォーマットが不正です");
+			System.out.println("商品定義ファイルのフォーマットが不正です");
 			return;
 		}
 		finally{
@@ -156,7 +156,7 @@ public class Kadai3 {
 
 				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
 				if(filenametemp != i + 1 || filearray[i].isDirectory()){
-					System.err.println("売り上げファイル名が連番になっていません");
+					System.out.println("売り上げファイル名が連番になっていません");
 					return;
 				}
 			}
@@ -173,7 +173,7 @@ public class Kadai3 {
 						data.add(line);
 						icount++;
 					} else {
-						System.err.println(files[i] + "のフォーマットが不正です");
+						System.out.println(files[i] + "のフォーマットが不正です");
 						calcbr.close();
 						return;
 					}
@@ -194,7 +194,7 @@ public class Kadai3 {
 					//存在しないときindexnumに-1が入る//
 					indexnum = storelist.indexOf(data.get(i));
 					if(indexnum == -1){
-						System.err.println(Arrays.asList(files[i/3]) + "の支店コードが不正です");
+						System.out.println(Arrays.asList(files[i/3]) + "の支店コードが不正です");
 						return;
 					}
 
@@ -207,7 +207,7 @@ public class Kadai3 {
 
 						//合計売り上げが11桁以上のときエラー処理//
 						if(strkeytemp.matches("^\\d{11,}")){
-							System.err.println("合計金額が10桁を超えました");
+							System.out.println("合計金額が10桁を超えました");
 							return;
 						}
 						storecodemap.put(data.get(i), strkeytemp);
@@ -216,7 +216,7 @@ public class Kadai3 {
 
 						//合計売り上げが11桁以上のときエラー処理//
 						if(valuestr.matches("^\\d{11,}")){
-							System.err.println("合計金額が10桁を超えました");
+							System.out.println("合計金額が10桁を超えました");
 							return;
 						}
 						storecodemap.put(data.get(i), valuestr);
@@ -240,7 +240,7 @@ public class Kadai3 {
 
 						//合計売り上げが11桁以上のときエラー処理//
 						if(strkeytemp.matches("^\\d{11,}")){
-							System.err.println("合計金額が10桁を超えました");
+							System.out.println("合計金額が10桁を超えました");
 							return;
 						}
 
@@ -250,7 +250,7 @@ public class Kadai3 {
 
 						//合計売り上げが11桁以上のときエラー処理//
 						if(valuestr.matches("^\\d{11,}")){
-							System.err.println("合計金額が10桁を超えました");
+							System.out.println("合計金額が10桁を超えました");
 							return;
 						}
 
@@ -261,7 +261,7 @@ public class Kadai3 {
 		}
 
 		catch(Exception e){
-			System.err.println("予期せぬエラーが発生しました");
+			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
 
@@ -363,7 +363,7 @@ public class Kadai3 {
 		}
 
 		catch(Exception e){
-			System.err.println("予期せぬエラーが発生しました");
+			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
 
