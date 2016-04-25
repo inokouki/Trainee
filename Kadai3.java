@@ -238,21 +238,23 @@ public class Kadai3 {
 
 			//支店別集計ファイル[branch.out]を降順で出力する//
 
+			System.out.println(args[0]);
+
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputStoreFileName = "branch.out";
+			String outputStoreFileName = args[0] + "\\branch.out";
 			File outputStoreFile = new File(outputStoreFileName);
 
 			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
 			OutputStreamWriter storeosw = new OutputStreamWriter(storefos);
-			PrintWriter storepw = new PrintWriter(storeosw);
+			PrintWriter storepw = new PrintWriter(outputStoreFileName);
 
 			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputGoodsFileName = "resourcebranch.out";
+			String outputGoodsFileName = args[0] + "\\commodity.out";
 			File outputGoodsFile = new File(outputGoodsFileName);
 
 			FileOutputStream goodsfos = new FileOutputStream(outputGoodsFile);
 			OutputStreamWriter goodsosw = new OutputStreamWriter(goodsfos);
-			PrintWriter goodspw = new PrintWriter(goodsosw);
+			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
 
 			//支店別の売り上げ確認(5回実行)//
 			for(int x = 0 ; x < storelist.size() ; x++){
