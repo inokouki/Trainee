@@ -21,23 +21,16 @@ public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
 
 	public static void main(String[] args) throws IOException{
-		//エラーの種類を判断する//
-		int er = 0;
+		List<String> storelist = new ArrayList<String>();
+		List<String> storelistname = new ArrayList<String>();
+		List<String> goodslist = new ArrayList<String>();
+		List<String> goodslistname = new ArrayList<String>();
+		HashMap<String, String> storecodemap = new HashMap<String, String>();
+		HashMap<String, String> goodscodemap = new HashMap<String, String>();
 
+		//支店ファイル読み込み//
 		try{
-			String storearray[] = null, goodsarray[] = null;
-			int count = 0, indexnum, filenametemp = 0;
-			List<String> data = new ArrayList<String>();
-			List<String> sucnum = new ArrayList<String>();
-			List<String> storelist = new ArrayList<String>();
-			List<String> storelistname = new ArrayList<String>();
-			List<String> goodslist = new ArrayList<String>();
-			List<String> goodslistname = new ArrayList<String>();
-			String[] tempstr = null;
-			long storetempnum = 0, valuetemp = 0;
-			String valuestr;
-			HashMap<String, String> storecodemap = new HashMap<String, String>();
-			HashMap<String, String> goodscodemap = new HashMap<String, String>();
+			String storearray[] = null;
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -50,7 +43,7 @@ public class Kadai3 {
 
 			//コマンドライン引数がディレクトリ以外のとき//
 			if(!dir.isDirectory()){
-				System.err.println("引数にディレクトリパスが入っていません");
+				System.err.println("予期せぬエラーが発生しました");
 				return;
 			}
 
@@ -65,20 +58,33 @@ public class Kadai3 {
 
 			//支店コード、支店名に分解//
 			while(storestr != null){
-				er = 1;
 				store.add(storestr);
-
 				storearray = storestr.split(",");
 
 				storemap.put(storearray[0],storearray[1]);
-
 				storestr = storebr.readLine();
 				storelist.add(storearray[0]);
 				storelistname.add(storearray[1]);
 			}
-			storebr.close();
+		}
 
-			//商品定義//
+		catch(FileNotFoundException e){
+			System.err.println("支店定義ファイルが存在しません");
+			return;
+		}
+
+		catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("支店定義ファイルのフォーマットが不正です");
+			return;
+		}
+		finally{
+			if(storebr != null) {storebr.close();}
+		}
+
+		//商品定義ファイル読み込み//
+		try{
+			String goodsarray[] = null;
+
 			BufferedReader goodsbr =
 					new BufferedReader(new FileReader(args[0] + File.separator + "commodity.lst"));
 			String goodsstr = goodsbr.readLine();
@@ -89,20 +95,37 @@ public class Kadai3 {
 
 			//商品コード、商品名に分解//
 			while(goodsstr != null){
-				er = 2;
 				goods.add(goodsstr);
 				goodsarray = goodsstr.split(",");
-
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
 				goodsstr = goodsbr.readLine();
 				goodslist.add(goodsarray[0]);
 				goodslistname.add(goodsarray[1]);
 			}
-			goodsbr.close();
-			er = 0;
+		}
 
-			//集計//
+		catch(FileNotFoundException e){
+			System.err.println("商品定義ファイルが存在しません");
+			return;
+		}
+
+		catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("商品定義ファイルのフォーマットが不正です");
+			return;
+		}
+		finally{
+			if(goodsbr != null) {goodsbr.close();}
+		}
+
+		//集計//
+		try{
+			int count = 0, filenametemp = 0, indexnum;
+			List<String> data = new ArrayList<String>();
+			List<String> sucnum = new ArrayList<String>();
+			String[] tempstr = null;
+			long valuetemp = 0;
+			String valuestr;
 
 			//コマンドライン引数のディレクトリをオープン//
 			File calcfile = new File(args[0]);
@@ -127,10 +150,9 @@ public class Kadai3 {
 					System.err.println("売り上げファイル名が連番になっていません");
 					return;
 				}
-
 			}
-			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 
+			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 			for(int i = 0; i<files.length ; i++){
 				int icount = 0;
 				String line;
@@ -152,6 +174,7 @@ public class Kadai3 {
 			for(int j = 0 ; j < count ; j++){
 				String strkeytemp = null;
 				long longkeytemp;
+				long storetempnum = 0;
 
 				//支店コード//
 				if(j % 3 == 0){
@@ -212,12 +235,6 @@ public class Kadai3 {
 							return;
 						}
 
-						//合計売り上げが11桁以上のときエラー処理//
-						if(strkeytemp.matches("^\\d{11,}")){
-							System.err.println("合計金額が10桁を超えました");
-							return;
-						}
-
 						goodscodemap.put(data.get(j), strkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
@@ -232,14 +249,20 @@ public class Kadai3 {
 					}
 				}
 			}
+		}
 
+		catch(Exception e){
+			System.err.println("予期せぬエラーが発生しました");
+			return;
+		}
+
+		finally{
 			if(calcbr != null) {calcbr.close();}
 			if(calcfr != null) {calcfr.close();}
+		}
 
-			//支店別集計ファイル[branch.out]を降順で出力する//
-
-			System.out.println(args[0]);
-
+		//ファイル出力//
+		try{
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
 			String outputStoreFileName = args[0] + "\\branch.out";
 			File outputStoreFile = new File(outputStoreFileName);
@@ -256,7 +279,7 @@ public class Kadai3 {
 			OutputStreamWriter goodsosw = new OutputStreamWriter(goodsfos);
 			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
 
-			//支店別の売り上げ確認(5回実行)//
+			//支店別の売り上げ確認//
 			for(int x = 0 ; x < storelist.size() ; x++){
 				if(storecodemap.get(storelist.get(x)) == null){
 					storecodemap.put(storelist.get(x), "0");
@@ -295,7 +318,7 @@ public class Kadai3 {
 		        System.out.println("支店ファイル出力完了");
 		        storepw.close();
 
-				//商品別の売り上げ確認(5回実行)//
+				//商品別の売り上げ確認//
 				for(int x = 0 ; x < goodslist.size() ; x++){
 					if(goodscodemap.get(goodslist.get(x)) == null){
 						goodscodemap.put(goodslist.get(x), "0");
@@ -338,43 +361,14 @@ public class Kadai3 {
 			        goodspw.close();
 		}
 
-		//branch.lstが見つからなかったとき//
-		catch(FileNotFoundException e){
-			System.err.println("支店定義ファイルが存在しません");
-			return;
-		}
-
-		//入出力の際に問題があったとき//
-		catch(IOException e){
-			System.out.println(e);
-			return;
-		}
-
-		//支店定義ファイルに区切りの","がなかったとき//
-		catch(ArrayIndexOutOfBoundsException e){
-			if(er == 1){
-			System.err.println("支店定義ファイルのフォーマットが不正です");
-			return;
-			} else if(er == 2){
-				System.err.println("商品定義ファイルのフォーマットが不正です");
-				return;
-			}
-		}
-
 		catch(Exception e){
 			System.err.println("予期せぬエラーが発生しました");
 			return;
 		}
 
 		finally{
-			//close処理//
-			if(storebr != null) {storebr.close();}
-			if(goodsbr != null) {goodsbr.close();}
-			if(calcbr != null) {calcbr.close();}
-			if(calcfr != null) {calcfr.close();}
-
 			System.out.println();
-			System.out.println("処理終了");
+			System.out.println("売り上げ集計システム:処理終了");
 		}
 	}
 }
