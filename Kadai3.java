@@ -18,7 +18,6 @@ import java.util.Map.Entry;
 public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
 
-	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException{
 		List<String> storelist = new ArrayList<String>();
 		List<String> storelistname = new ArrayList<String>();
@@ -61,6 +60,7 @@ public class Kadai3 {
 
 				if(!storearray[0].matches("\\d{3}")){
 					System.err.println("支店定義ファイルのフォーマットが不正です");
+					storebr.close();
 					return;
 				}
 
@@ -105,6 +105,7 @@ public class Kadai3 {
 
 				if(!goodsarray[0].matches("SFT\\d{5}")){
 					System.err.println("商品定義ファイルのフォーマットが不正です");
+					goodsbr.close();
 					return;
 				}
 				goodslist.add(goodsarray[0]);
@@ -173,10 +174,12 @@ public class Kadai3 {
 						icount++;
 					} else {
 						System.err.println(files[i] + "のフォーマットが不正です");
+						calcbr.close();
 						return;
 					}
 					count++;
 				}
+				calcbr.close();
 			}
 
 			for(int i = 0 ; i < count ; i++){
