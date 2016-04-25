@@ -25,6 +25,7 @@ public class Kadai3 {
 		List<String> goodslistname = new ArrayList<String>();
 		HashMap<String, String> storecodemap = new HashMap<String, String>();
 		HashMap<String, String> goodscodemap = new HashMap<String, String>();
+		HashMap<String, String> goodsmap = new HashMap<String, String>();
 
 		//支店ファイル読み込み//
 		try{
@@ -95,12 +96,16 @@ public class Kadai3 {
 
 			//ハッシュマップ作成//
 			ArrayList<String> goods = new ArrayList<String>();
-			HashMap<String, String> goodsmap = new HashMap<String, String>();
 
 			//商品コード、商品名に分解//
 			while(goodsstr != null){
 				goods.add(goodsstr);
 				goodsarray = goodsstr.split(",");
+				if(goodsarray.length != 2){
+					System.out.println("商品定義ファイルのフォーマットが不正です");
+					goodsbr.close();
+					return;
+				}
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
 				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}")){
@@ -112,6 +117,7 @@ public class Kadai3 {
 				goodslistname.add(goodsarray[1]);
 				goodsstr = goodsbr.readLine();
 			}
+			System.out.println("c1:" + goodslist);
 		}
 
 		catch(FileNotFoundException e){
@@ -182,9 +188,11 @@ public class Kadai3 {
 				calcbr.close();
 			}
 
+			System.out.println("c2:" + goodslist);
+
 			for(int i = 0 ; i < count ; i++){
 				String strkeytemp = null;
-				long longkeytemp;;
+				long longkeytemp;
 
 				//支店コード//
 				if(i % 3 == 0){
@@ -225,6 +233,7 @@ public class Kadai3 {
 
 				//商品コード//
 				if(i % 3 == 1){
+					valuetemp = Long.parseLong(data.get(i+1));
 					//存在しないときindexnumに-1が入る//
 					indexnum = goodslist.indexOf(data.get(i));
 					if(indexnum == -1){
@@ -258,6 +267,8 @@ public class Kadai3 {
 					}
 				}
 			}
+			System.out.println("c3:" + goodslist);
+			System.out.println("c4:" + goodscodemap);
 		}
 
 		catch(Exception e){
@@ -348,14 +359,7 @@ public class Kadai3 {
 
 			        //商品別の売り上げの並び替え終了後//
 			        for(Entry<String, String> t : goodsentries) {
-			        	String strnumber = null;
-			        	int intnumber = 0;
-
-			            if(t.getKey().matches("SFT\\d{5}$")){
-			            	strnumber = t.getKey().substring(4-1);
-			            	intnumber = Integer.parseInt(strnumber)-1;
-			            }
-				        goodspw.println(t.getKey() + "," + goodslistname.get(intnumber) + "," + t.getValue());
+				        goodspw.println(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
 			        }
 			        goodspw.close();
 		}
