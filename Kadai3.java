@@ -2,11 +2,9 @@ package jp.co.iccom.ino_kouki.calculate_sales;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +18,7 @@ import java.util.Map.Entry;
 public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException{
 		List<String> storelist = new ArrayList<String>();
 		List<String> storelistname = new ArrayList<String>();
@@ -182,13 +181,11 @@ public class Kadai3 {
 
 			for(int i = 0 ; i < count ; i++){
 				String strkeytemp = null;
-				long longkeytemp;
-				long storetempnum = 0;
+				long longkeytemp;;
 
 				//支店コード//
 				if(i % 3 == 0){
 					//int型に変換//
-					storetempnum = Integer.parseInt(data.get(i));
 					valuetemp = Long.parseLong(data.get(i+2));
 
 					//存在しないときindexnumに-1が入る//
@@ -274,18 +271,10 @@ public class Kadai3 {
 		try{
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
 			String outputStoreFileName = args[0] + File.separator + "\\branch.out";
-			File outputStoreFile = new File(outputStoreFileName);
-
-			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
-			OutputStreamWriter storeosw = new OutputStreamWriter(storefos);
 			PrintWriter storepw = new PrintWriter(outputStoreFileName);
 
 			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
 			String outputGoodsFileName = args[0] + File.separator + "\\commodity.out";
-			File outputGoodsFile = new File(outputGoodsFileName);
-
-			FileOutputStream goodsfos = new FileOutputStream(outputGoodsFile);
-			OutputStreamWriter goodsosw = new OutputStreamWriter(goodsfos);
 			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
 
 			//支店別の売り上げ確認//
