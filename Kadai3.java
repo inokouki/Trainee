@@ -10,8 +10,12 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
@@ -26,14 +30,14 @@ public class Kadai3 {
 			List<String> data = new ArrayList<String>();
 			List<String> sucnum = new ArrayList<String>();
 			List<String> storelist = new ArrayList<String>();
+			List<String> storelistname = new ArrayList<String>();
 			List<String> goodslist = new ArrayList<String>();
+			List<String> goodslistname = new ArrayList<String>();
 			String[] tempstr = null;
 			long storetempnum = 0, valuetemp = 0;
 			String valuestr;
 			HashMap<String, String> storecodemap = new HashMap<String, String>();
 			HashMap<String, String> goodscodemap = new HashMap<String, String>();
-			HashMap<String, String> newstoremap = new HashMap<String, String>();
-			HashMap<String, String> newgoodsmap = new HashMap<String, String>();
 
 			//コマンドライン引数をpathに代入//
 			String path = ".";
@@ -69,12 +73,10 @@ public class Kadai3 {
 				storemap.put(storearray[0],storearray[1]);
 
 				storestr = storebr.readLine();
-				System.out.println(storearray[0] + "," + storearray[1]);
 				storelist.add(storearray[0]);
+				storelistname.add(storearray[1]);
 			}
-			System.out.println("店名コード一覧: " + storelist);
 			storebr.close();
-			System.out.println();
 
 			//商品定義//
 			BufferedReader goodsbr =
@@ -94,13 +96,11 @@ public class Kadai3 {
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
 				goodsstr = goodsbr.readLine();
-				System.out.println(goodsarray[0] + "," + goodsarray[1]);
 				goodslist.add(goodsarray[0]);
+				goodslistname.add(goodsarray[1]);
 			}
 			goodsbr.close();
 			er = 0;
-			System.out.println("商品コード一覧: " + goodslist);
-			System.out.println();
 
 			//集計//
 
@@ -110,7 +110,6 @@ public class Kadai3 {
 			//フィルタクラスで[8桁数字.rcd]のファイル形式のみfilesに入れる//
 			File[] filearray = calcfile.listFiles();
 			String[]files = calcfile.list(new Filter());
-			System.out.println("フィルター後: " + Arrays.asList(files));
 
 			//sucnumにファイル名である8桁の数字を格納//
 			for(int k = 0 ; k < files.length ; k++){
@@ -122,7 +121,6 @@ public class Kadai3 {
 				}
 
 				filenametemp = Integer.parseInt(sucnum.get(k));
-				System.out.println("filenametemp: " + filenametemp);
 
 				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
 				if(filenametemp != k + 1 || filearray[k].isDirectory()){
@@ -131,10 +129,6 @@ public class Kadai3 {
 				}
 
 			}
-			System.out.println("ファイル名: " + sucnum);
-			System.out.println();
-
-
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 
 			for(int i = 0; i<files.length ; i++){
@@ -154,8 +148,6 @@ public class Kadai3 {
 					count++;
 				}
 			}
-			System.out.println("処理回数 " + count + ":" + data);
-			System.out.println();
 
 			for(int j = 0 ; j < count ; j++){
 				String strkeytemp = null;
@@ -163,13 +155,9 @@ public class Kadai3 {
 
 				//支店コード//
 				if(j % 3 == 0){
-					System.out.println("j%3=0");
 					//int型に変換//
 					storetempnum = Integer.parseInt(data.get(j));
 					valuetemp = Long.parseLong(data.get(j+2));
-
-					System.out.println("storetempnum: " + storetempnum);
-					System.out.println("valuetemp: " + valuetemp);
 
 					//存在しないときindexnumに-1が入る//
 					indexnum = storelist.indexOf(data.get(j));
@@ -190,9 +178,7 @@ public class Kadai3 {
 							System.err.println("合計金額が10桁を超えました");
 							return;
 						}
-
 						storecodemap.put(data.get(j), strkeytemp);
-						System.out.println("キー発見: " + storecodemap.get(data.get(j)));
 					} else {
 						valuestr = String.valueOf(valuetemp);
 
@@ -201,24 +187,15 @@ public class Kadai3 {
 							System.err.println("合計金額が10桁を超えました");
 							return;
 						}
-
 						storecodemap.put(data.get(j), valuestr);
-						System.out.println("キーが見つかりませんでした。マップを作成します");
 					}
-					System.out.println();
 				}
 
 				//商品コード//
 				if(j % 3 == 1){
-					System.out.println("j%3=1");
-
-					System.out.println("storetempnum: " + storetempnum);
-					System.out.println("valuetemp: " + valuetemp);
-
 					//存在しないときindexnumに-1が入る//
 					indexnum = goodslist.indexOf(data.get(j));
 					if(indexnum == -1){
-						System.err.println(Arrays.asList(files[j/3]) + "の商品コードが不正です");
 						return;
 					}
 
@@ -242,7 +219,6 @@ public class Kadai3 {
 						}
 
 						goodscodemap.put(data.get(j), strkeytemp);
-						System.out.println("商品コード: " + data.get(j) + " 合計金額: " + strkeytemp);
 					} else {
 						valuestr = String.valueOf(valuetemp);
 
@@ -253,80 +229,111 @@ public class Kadai3 {
 						}
 
 						goodscodemap.put(data.get(j), valuestr);
-						System.out.println("商品コード: " + data.get(j) + " 金額: " + valuestr + "をセットしました");
-					System.out.println();
 					}
 				}
 			}
-
-			System.out.println();
-			System.out.println("出力前まで");
-			System.out.println();
 
 			if(calcbr != null) {calcbr.close();}
 			if(calcfr != null) {calcfr.close();}
 
 			//支店別集計ファイル[branch.out]を降順で出力する//
 
+			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
+			String outputStoreFileName = "branch.out";
+			File outputStoreFile = new File(outputStoreFileName);
+
+			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
+			OutputStreamWriter storeosw = new OutputStreamWriter(storefos);
+			PrintWriter storepw = new PrintWriter(storeosw);
+
+			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
+			String outputGoodsFileName = "resourcebranch.out";
+			File outputGoodsFile = new File(outputGoodsFileName);
+
+			FileOutputStream goodsfos = new FileOutputStream(outputGoodsFile);
+			OutputStreamWriter goodsosw = new OutputStreamWriter(goodsfos);
+			PrintWriter goodspw = new PrintWriter(goodsosw);
+
 			//支店別の売り上げ確認(5回実行)//
-			System.out.println("支店別の並び替え前");
 			for(int x = 0 ; x < storelist.size() ; x++){
 				if(storecodemap.get(storelist.get(x)) == null){
 					storecodemap.put(storelist.get(x), "0");
 				}
-				System.out.println(storelist.get(x) + ":" + storecodemap.get(storelist.get(x)));
 			}
-			System.out.println();
 
 			//支店別売り上げの並び替え//
-			for(int x = 0 ; x < storelist.size() - 1 ; x++){
-				long before = 0, after = 0 , temp = 0;
-				String beforetempname = null, aftertempname = null;
-				int beforecount = -1;
+			List<Map.Entry<String,String>> entries =
+		              new ArrayList<Map.Entry<String,String>>(storecodemap.entrySet());
+		        Collections.sort(entries, new Comparator<Map.Entry<String,String>>() {
 
-				before = Long.parseLong(storecodemap.get(storelist.get(x)));
+		        	long e1 = 0, e2 = 0;
 
-				for(int y = x + 1 ; y < storelist.size() ; y++){
-					after = Long.parseLong(storecodemap.get(storelist.get(y)));
-					System.out.println("x=" + x + ",y=" + y + "のとき" + before + ":" + after);
-
-					if(before < after){
-						temp = before;
-						before = after;
-						after = temp;
-						aftertempname = String.valueOf(after);
-						storecodemap.put(storelist.get(y), aftertempname);
-						beforecount = y;
-					}
-
-					if(beforecount == -1){
-						beforecount = x;
-					}
-
-					beforetempname = String.valueOf(before);
-				}
-				System.out.println(beforecount + ":" + beforetempname + ":" + storelist.get(beforecount));
-				newstoremap.put(storelist.get(x), beforetempname);
-			}
-
-			if(newstoremap.size() < storecodemap.size()){
-
-			}
+		            @Override
+		            public int compare(
+		                  Entry<String,String> entry1, Entry<String,String> entry2) {
+		            	e1 = Long.parseLong(entry2.getValue());
+		            	e2 = Long.parseLong(entry1.getValue());
+		            	if(e1 > e2){
+		            		return 1;
+		            	} else if(e1 == e2){
+		            		return 0;
+		            	} else {
+		            		return -1;
+		            	}
+		            }
+		        });
 
 			//支店別の売り上げの並び替え終了後//
-			System.out.println("支店別の並び替え後");
-			System.out.println(newstoremap.keySet() + ":" + newstoremap.values());
-			System.out.println();
+		        for(Entry<String, String> s : entries) {
+		        	int number = 0;
 
+		            number = Integer.parseInt(s.getKey()) - 1;
+			        storepw.println(s.getKey() + "," + storelistname.get(number) + "," + s.getValue());
+		        }
+		        System.out.println("支店ファイル出力完了");
+		        storepw.close();
 
-			//出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputStoreFileName = "branch.out";
-			File outputStoreFile = new File(outputStoreFileName);
+				//商品別の売り上げ確認(5回実行)//
+				for(int x = 0 ; x < goodslist.size() ; x++){
+					if(goodscodemap.get(goodslist.get(x)) == null){
+						goodscodemap.put(goodslist.get(x), "0");
+					}
+				}
 
-			//出力ストリームの作成//
-			FileOutputStream storefos = new FileOutputStream(outputStoreFile);
-			OutputStreamWriter storeosw = new OutputStreamWriter(storefos);
-			PrintWriter storepw = new PrintWriter(storeosw);
+				//商品別売り上げの並び替え//
+				List<Map.Entry<String,String>> goodsentries =
+			              new ArrayList<Map.Entry<String,String>>(goodscodemap.entrySet());
+			        Collections.sort(goodsentries, new Comparator<Map.Entry<String,String>>() {
+
+			        	long e1 = 0, e2 = 0;
+			            @Override
+			            public int compare(
+			                  Entry<String,String> entry1, Entry<String,String> entry2) {
+			            	e1 = Long.parseLong(entry2.getValue());
+			            	e2 = Long.parseLong(entry1.getValue());
+			            	if(e1 > e2){
+			            		return 1;
+			            	} else if(e1 == e2){
+			            		return 0;
+			            	} else {
+			            		return -1;
+			            	}
+			            }
+			        });
+
+			        //商品別の売り上げの並び替え終了後//
+			        for(Entry<String, String> t : goodsentries) {
+			        	String strnumber = null;
+			        	int intnumber = 0;
+
+			            if(t.getKey().matches("SFT\\d{5}$")){
+			            	strnumber = t.getKey().substring(4-1);
+			            	intnumber = Integer.parseInt(strnumber)-1;
+			            }
+				        goodspw.println(t.getKey() + "," + goodslistname.get(intnumber) + "," + t.getValue());
+			        }
+			        System.out.println("商品ファイル出力完了");
+			        goodspw.close();
 		}
 
 		//branch.lstが見つからなかったとき//
