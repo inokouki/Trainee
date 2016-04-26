@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -53,20 +52,21 @@ public class Kadai3 {
 
 			//ハッシュマップ作成//
 			ArrayList<String> store = new ArrayList<String>();
-			HashMap<String, String> storemap = new HashMap<String, String>();
 
 			//支店コード、支店名に分解//
 			while(storestr != null){
 				store.add(storestr);
 				storearray = storestr.split(",");
 
-				if(!storearray[0].matches("\\d{3}")){
+				//数字3桁ではない、カンマが1つ以外の、ときエラー処理//
+				if(!storearray[0].matches("\\d{3}") || storearray.length != 2){
 					System.out.println("支店定義ファイルのフォーマットが不正です");
 					storebr.close();
 					return;
 				}
 
-				storemap.put(storearray[0],storearray[1]);
+				storecodemap.put(storearray[0], "0");
+
 				storelist.add(storearray[0]);
 				storelistname.add(storearray[1]);
 				storestr = storebr.readLine();
@@ -102,18 +102,16 @@ public class Kadai3 {
 			while(goodsstr != null){
 				goods.add(goodsstr);
 				goodsarray = goodsstr.split(",");
-				if(goodsarray.length != 2){
+
+				//商品コードが英数字8文字ではない、カンマが1つ以外の、ときエラー処理//
+				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
 					System.out.println("商品定義ファイルのフォーマットが不正です");
 					goodsbr.close();
 					return;
 				}
+
 				goodsmap.put(goodsarray[0],goodsarray[1]);
 
-				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}")){
-					System.out.println("商品定義ファイルのフォーマットが不正です");
-					goodsbr.close();
-					return;
-				}
 				goodslist.add(goodsarray[0]);
 				goodslistname.add(goodsarray[1]);
 				goodsstr = goodsbr.readLine();
@@ -135,8 +133,7 @@ public class Kadai3 {
 
 		//集計//
 		try{
-			int count = 0, filenametemp = 0, indexnum;
-			List<String> data = new ArrayList<String>();
+			int filenametemp = 0, indexnum;
 			List<String> sucnum = new ArrayList<String>();
 			String[] tempstr = null;
 			long valuetemp = 0;
@@ -162,7 +159,7 @@ public class Kadai3 {
 
 				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
 				if(filenametemp != i + 1 || filearray[i].isDirectory()){
-					System.out.println("売り上げファイル名が連番になっていません");
+					System.out.println("売上ファイル名が連番になっていません");
 					return;
 				}
 			}
@@ -170,107 +167,123 @@ public class Kadai3 {
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
 			for(int i = 0; i<files.length ; i++){
 				int icount = 0;
-				String line;
+				String strkeytemp = null, line, storekey = null, goodskey = null;
+				long longkeytemp;
+
 				FileReader calcfr = new FileReader(args[0] + File.separator + files[i]);
 				BufferedReader calcbr =
 						new BufferedReader(calcfr);
+
 				while((line = calcbr.readLine()) != null){
-					if(icount < 3){
-						data.add(line);
-						icount++;
-					} else {
+					if(icount > 3){
 						System.out.println(files[i] + "のフォーマットが不正です");
 						calcbr.close();
 						return;
 					}
-					count++;
+
+					//icount=0,支店コードのときの集計//
+					if(icount == 0){
+						storekey = line;
+
+						//存在しないときindexnumに-1が入る//
+						indexnum = storelist.indexOf(storekey);
+						if(indexnum == -1){
+							System.out.println(files[i] + "の支店コードが不正です");
+							calcfr.close();
+							calcbr.close();
+							return;
+						}
+					}
+
+					//icount=1,商品コードのときの集計//
+					if(icount == 1){
+						goodskey = line;
+
+						//存在しないときindexnumに-1が入る//
+						indexnum = goodslist.indexOf(goodskey);
+						if(indexnum == -1){
+							System.out.println(files[i] + "の商品コードが不正です");
+							calcfr.close();
+							calcbr.close();
+							return;
+						}
+					}
+
+					//icount=2,売り上げ数値のときの集計処理//
+					if(icount == 2){
+						//売り上げをString型からlong型に変換//
+						valuetemp = Long.parseLong(line);
+
+						//支店コードで既にマップが存在しているかどうか//
+						if(storecodemap.containsKey(storekey)){
+							strkeytemp = storecodemap.get(storekey);
+							longkeytemp = Long.parseLong(strkeytemp);
+							longkeytemp = longkeytemp + valuetemp;
+							strkeytemp = String.valueOf(longkeytemp);
+
+							//合計売り上げが11桁以上のときエラー処理//
+							if(strkeytemp.matches("^\\d{11,}")){
+								System.out.println("合計金額が10桁を超えました");
+								calcfr.close();
+								calcbr.close();
+								return;
+							}
+							storecodemap.put(storekey, strkeytemp);
+						} else {
+							valuestr = String.valueOf(valuetemp);
+
+							//合計売り上げが11桁以上のときエラー処理//
+							if(valuestr.matches("^\\d{11,}")){
+								System.out.println("合計金額が10桁を超えました");
+								calcfr.close();
+								calcbr.close();
+								return;
+							}
+							storecodemap.put(storekey, line);
+						}
+
+						//商品コードで既にマップが存在しているかどうか//
+						if(goodscodemap.containsKey(goodskey)){
+							strkeytemp = goodscodemap.get(goodskey);
+							longkeytemp = Long.parseLong(strkeytemp);
+							longkeytemp = longkeytemp + valuetemp;
+							strkeytemp = String.valueOf(longkeytemp);
+
+							//合計売り上げが11桁以上のときエラー処理//
+							if(strkeytemp.matches("^\\d{11,}")){
+								System.out.println("合計金額が10桁を超えました");
+								calcfr.close();
+								calcbr.close();
+								return;
+							}
+							goodscodemap.put(goodskey, strkeytemp);
+						} else {
+							valuestr = String.valueOf(valuetemp);
+
+							//合計売り上げが11桁以上のときエラー処理//
+							if(valuestr.matches("^\\d{11,}")){
+								System.out.println("合計金額が10桁を超えました");
+								calcfr.close();
+								calcbr.close();
+								return;
+							}
+							goodscodemap.put(goodskey, line);
+						}
+					}
+					icount++;
+				}
+
+				if(icount != 3){
+						System.out.println(files[i] + "のフォーマットが不正です");
+						calcbr.close();
+						return;
 				}
 				calcbr.close();
-			}
-
-			for(int i = 0 ; i < count ; i++){
-				String strkeytemp = null;
-				long longkeytemp;
-
-				//支店コード//
-				if(i % 3 == 0){
-					//int型に変換//
-					valuetemp = Long.parseLong(data.get(i+2));
-
-					//存在しないときindexnumに-1が入る//
-					indexnum = storelist.indexOf(data.get(i));
-					if(indexnum == -1){
-						System.out.println(Arrays.asList(files[i/3]) + "の支店コードが不正です");
-						return;
-					}
-
-					//既にマップが存在しているかどうか//
-					if(storecodemap.containsKey(data.get(i))){
-						strkeytemp = storecodemap.get(data.get(i));
-						longkeytemp = Long.parseLong(strkeytemp);
-						longkeytemp = longkeytemp + valuetemp;
-						strkeytemp = String.valueOf(longkeytemp);
-
-						//合計売り上げが11桁以上のときエラー処理//
-						if(strkeytemp.matches("^\\d{11,}")){
-							System.out.println("合計金額が10桁を超えました");
-							return;
-						}
-						storecodemap.put(data.get(i), strkeytemp);
-					} else {
-						valuestr = String.valueOf(valuetemp);
-
-						//合計売り上げが11桁以上のときエラー処理//
-						if(valuestr.matches("^\\d{11,}")){
-							System.out.println("合計金額が10桁を超えました");
-							return;
-						}
-						storecodemap.put(data.get(i), valuestr);
-					}
-				}
-
-				//商品コード//
-				if(i % 3 == 1){
-					valuetemp = Long.parseLong(data.get(i+1));
-					//存在しないときindexnumに-1が入る//
-					indexnum = goodslist.indexOf(data.get(i));
-					if(indexnum == -1){
-						System.out.println(Arrays.asList(files[i/3]) + "の商品コードが不正です");
-						return;
-					}
-
-					//既にマップが存在しているかどうか//
-					if(goodscodemap.containsKey(data.get(i))){
-						strkeytemp = goodscodemap.get(data.get(i));
-						longkeytemp = Long.parseLong(strkeytemp);
-						longkeytemp = longkeytemp + valuetemp;
-						strkeytemp = String.valueOf(longkeytemp);
-
-						//合計売り上げが11桁以上のときエラー処理//
-						if(strkeytemp.matches("^\\d{11,}")){
-							System.out.println("合計金額が10桁を超えました");
-							return;
-						}
-
-						goodscodemap.put(data.get(i), strkeytemp);
-					} else {
-						valuestr = String.valueOf(valuetemp);
-
-						//合計売り上げが11桁以上のときエラー処理//
-						if(valuestr.matches("^\\d{11,}")){
-							System.out.println("合計金額が10桁を超えました");
-							return;
-						}
-
-						goodscodemap.put(data.get(i), valuestr);
-					}
-				}
 			}
 		}
 
 		catch(Exception e){
 			System.out.println("予期せぬエラーが発生しました");
-			return;
 		}
 
 		finally{
@@ -362,7 +375,7 @@ public class Kadai3 {
 					goodsbw.close();
 		}
 
-		catch(Exception e){
+		catch(IOException e){
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
