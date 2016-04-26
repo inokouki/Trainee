@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Kadai3 {
-	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, goodsbw;
+	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, goodsbw, earnbr, earnfr;
 
 	public static void main(String[] args) throws IOException{
 		List<String> storelist = new ArrayList<String>();
@@ -166,8 +166,30 @@ public class Kadai3 {
 				}
 			}
 
+			//数字8桁.rcdファイルの中身が3行以外はエラー//
+			for(int i = 0 ; i < files.length ; i++){
+				String earnline = null;
+				ArrayList<String> earn = new ArrayList<String>();
+
+				FileReader earnfr = new FileReader(args[0] + File.separator + files[i]);
+				BufferedReader earnbr =
+						new BufferedReader(earnfr);
+
+				while((earnline = earnbr.readLine()) != null){
+					earn.add(earnline);
+				}
+
+				if(earn.size() != 3){
+					System.out.println(files[i] + "のフォーマットが不正です");
+					earnbr.close();
+					earnfr.close();
+					return;
+				}
+				earnbr.close();
+			}
+
 			//フィルタを通ったファイルのみ、配列dataに情報を格納して出力する//
-			for(int i = 0; i<files.length ; i++){
+			for(int i = 0; i < files.length ; i++){
 				int icount = 0;
 				String strkeytemp = null, line, storekey = null, goodskey = null;
 				long longkeytemp;
@@ -186,6 +208,7 @@ public class Kadai3 {
 					//icount=0,支店コードのときの集計//
 					if(icount == 0){
 						storekey = line;
+
 
 						//存在しないときindexnumに-1が入る//
 						indexnum = storelist.indexOf(storekey);
@@ -279,6 +302,8 @@ public class Kadai3 {
 		finally{
 			if(calcbr != null) {calcbr.close();}
 			if(calcfr != null) {calcfr.close();}
+			if(earnbr != null) {calcfr.close();}
+			if(earnfr != null) {calcfr.close();}
 		}
 
 		//ファイル出力//
