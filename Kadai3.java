@@ -17,13 +17,13 @@ import java.util.Map.Entry;
 
 public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, goodsbw, earnbr, earnfr;
+	public static HashMap<String, String> storecodemap = new HashMap<String, String>();
 
 	public static void main(String[] args) throws IOException{
 		List<String> storelist = new ArrayList<String>();
 		List<String> storelistname = new ArrayList<String>();
 		List<String> goodslist = new ArrayList<String>();
 		List<String> goodslistname = new ArrayList<String>();
-		HashMap<String, String> storecodemap = new HashMap<String, String>();
 		HashMap<String, String> goodscodemap = new HashMap<String, String>();
 		HashMap<String, String> goodsmap = new HashMap<String, String>();
 		HashMap<String, String> storemap = new HashMap<String, String>();
@@ -31,8 +31,9 @@ public class Kadai3 {
 		//支店ファイル読み込み//
 		try{
 			String storearray[] = null;
-			File dir = null;
+			File dir;
 
+			//コマンドライン引数の数が1つ以外のときエラー//
 			if(args.length == 1){
 				dir = new File(args[0]);
 			} else {
@@ -40,7 +41,7 @@ public class Kadai3 {
 				return;
 			}
 
-			//コマンドライン引数がディレクトリ以外のとき//
+			//コマンドライン引数がディレクトリ以外のときエラー//
 			if(!dir.isDirectory()){
 				System.out.println("予期せぬエラーが発生しました");
 				return;
@@ -51,13 +52,12 @@ public class Kadai3 {
 					new BufferedReader(new FileReader(args[0] + File.separator + "branch.lst"));
 			String storestr = storebr.readLine();
 
-			//ハッシュマップ作成//
 			ArrayList<String> store = new ArrayList<String>();
 
 			//支店コード、支店名に分解//
 			while(storestr != null){
 				store.add(storestr);
-				storearray = storestr.split(",");
+				storearray = storestr.split("," , 2);
 
 				//数字3桁ではない、カンマが1つ以外の、ときエラー処理//
 				if(!storearray[0].matches("\\d{3}") || storearray.length != 2){
@@ -85,6 +85,11 @@ public class Kadai3 {
 			System.out.println("支店定義ファイルのフォーマットが不正です");
 			return;
 		}
+
+		catch(IOException e){
+			System.out.println("予期せぬエラーが発生しました");
+		}
+
 		finally{
 			if(storebr != null) {storebr.close();}
 		}
@@ -103,7 +108,7 @@ public class Kadai3 {
 			//商品コード、商品名に分解//
 			while(goodsstr != null){
 				goods.add(goodsstr);
-				goodsarray = goodsstr.split(",");
+				goodsarray = goodsstr.split("," , 2);
 
 				//商品コードが英数字8文字ではない、カンマが1つ以外の、ときエラー処理//
 				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
@@ -152,7 +157,7 @@ public class Kadai3 {
 			for(int i = 0 ; i < files.length ; i++){
 				for(int j = 0 ; j < 2 ; j++){
 					if(j == 0){
-						tempstr = files[i].split("\\.");
+						tempstr = files[i].split("\\.", 2);
 						sucnum.add(tempstr[j]);
 					}
 				}
@@ -241,10 +246,7 @@ public class Kadai3 {
 
 						//支店コードで既にマップが存在しているかどうか//
 						if(storecodemap.containsKey(storekey)){
-							strkeytemp = storecodemap.get(storekey);
-							longkeytemp = Long.parseLong(strkeytemp);
-							longkeytemp = longkeytemp + valuetemp;
-							strkeytemp = String.valueOf(longkeytemp);
+							strkeytemp = add(storekey, valuetemp);
 
 							//合計売り上げが11桁以上のときエラー処理//
 							if(strkeytemp.matches("^\\d{11,}")){
@@ -295,7 +297,7 @@ public class Kadai3 {
 			}
 		}
 
-		catch(Exception e){
+		catch(IOException e){
 			System.out.println("予期せぬエラーが発生しました");
 		}
 
@@ -351,7 +353,10 @@ public class Kadai3 {
 			//支店別の売り上げの並び替え終了後//
 		        for(Entry<String, String> s : entries) {
 			        storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
-			        storebw.newLine();
+			        if(storeloop > 1){
+ 				        storebw.newLine();
+ 				        storeloop--;
+ 			        }
 		        }
 				storebw.close();
 				//商品別の売り上げ確認//
@@ -385,7 +390,10 @@ public class Kadai3 {
 			        //商品別の売り上げの並び替え終了後//
 			        for(Entry<String, String> t : goodsentries) {
 				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
-				        storebw.newLine();
+				        if(goodsloop > 1){
+ 					        goodsbw.newLine();
+ 					        goodsloop--;
+ 				        }
 			        }
 					goodsbw.close();
 		}
@@ -399,6 +407,17 @@ public class Kadai3 {
 			if(storebw != null) {storebw.close();}
 			if(goodsbw != null) {goodsbw.close();}
 		}
+	}
+	public static String add(String key, long additionalvalue){
+		String after = null, before = null;
+		long temp = 0, longkeytemp = 0;
+
+		before = storecodemap.get(key);
+		temp = Long.parseLong(before);
+		longkeytemp = additionalvalue + temp;
+		after = String.valueOf(longkeytemp);
+
+		return after;
 	}
 }
 
