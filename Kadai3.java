@@ -26,6 +26,7 @@ public class Kadai3 {
 		HashMap<String, String> storecodemap = new HashMap<String, String>();
 		HashMap<String, String> goodscodemap = new HashMap<String, String>();
 		HashMap<String, String> goodsmap = new HashMap<String, String>();
+		HashMap<String, String> storemap = new HashMap<String, String>();
 
 		//支店ファイル読み込み//
 		try{
@@ -66,6 +67,7 @@ public class Kadai3 {
 				}
 
 				storecodemap.put(storearray[0], "0");
+				storemap.put(storearray[0], storearray[1]);
 
 				storelist.add(storearray[0]);
 				storelistname.add(storearray[1]);
@@ -110,7 +112,8 @@ public class Kadai3 {
 					return;
 				}
 
-				goodsmap.put(goodsarray[0],goodsarray[1]);
+				goodscodemap.put(goodsarray[0], "0");
+				goodsmap.put(goodsarray[0], goodsarray[1]);
 
 				goodslist.add(goodsarray[0]);
 				goodslistname.add(goodsarray[1]);
@@ -137,7 +140,6 @@ public class Kadai3 {
 			List<String> sucnum = new ArrayList<String>();
 			String[] tempstr = null;
 			long valuetemp = 0;
-			String valuestr;
 
 			//コマンドライン引数のディレクトリをオープン//
 			File calcfile = new File(args[0]);
@@ -230,16 +232,10 @@ public class Kadai3 {
 							}
 							storecodemap.put(storekey, strkeytemp);
 						} else {
-							valuestr = String.valueOf(valuetemp);
-
-							//合計売り上げが11桁以上のときエラー処理//
-							if(valuestr.matches("^\\d{11,}")){
-								System.out.println("合計金額が10桁を超えました");
-								calcfr.close();
-								calcbr.close();
-								return;
-							}
-							storecodemap.put(storekey, line);
+							System.out.println(files[i] + "の支店コードが不正です");
+							calcfr.close();
+							calcbr.close();
+							return;
 						}
 
 						//商品コードで既にマップが存在しているかどうか//
@@ -258,16 +254,10 @@ public class Kadai3 {
 							}
 							goodscodemap.put(goodskey, strkeytemp);
 						} else {
-							valuestr = String.valueOf(valuetemp);
-
-							//合計売り上げが11桁以上のときエラー処理//
-							if(valuestr.matches("^\\d{11,}")){
-								System.out.println("合計金額が10桁を超えました");
-								calcfr.close();
-								calcbr.close();
-								return;
-							}
-							goodscodemap.put(goodskey, line);
+							System.out.println(files[i] + "の商品コードが不正です");
+							calcfr.close();
+							calcbr.close();
+							return;
 						}
 					}
 					icount++;
@@ -293,6 +283,7 @@ public class Kadai3 {
 
 		//ファイル出力//
 		try{
+			int storeloop = storecodemap.size(), goodsloop = goodscodemap.size();
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
 			File storefile = new File(args[0] + File.separator + "branch.out");
 			FileWriter storefw = new FileWriter(storefile);
@@ -334,10 +325,11 @@ public class Kadai3 {
 
 			//支店別の売り上げの並び替え終了後//
 		        for(Entry<String, String> s : entries) {
-		        	int number = 0;
-
-		            number = Integer.parseInt(s.getKey()) - 1;
-			        storebw.write(s.getKey() + "," + storelistname.get(number) + "," + s.getValue() + "\r\n");
+			        storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
+			        if(storeloop > 1){
+				        storebw.newLine();
+				        storeloop--;
+			        }
 		        }
 				storebw.close();
 				//商品別の売り上げ確認//
@@ -370,7 +362,11 @@ public class Kadai3 {
 
 			        //商品別の売り上げの並び替え終了後//
 			        for(Entry<String, String> t : goodsentries) {
-				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue() + "\r\n");
+				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
+				        if(goodsloop > 1){
+					        goodsbw.newLine();
+					        goodsloop--;
+				        }
 			        }
 					goodsbw.close();
 		}
