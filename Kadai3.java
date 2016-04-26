@@ -351,10 +351,7 @@ public class Kadai3 {
 			//支店別の売り上げの並び替え終了後//
 		        for(Entry<String, String> s : entries) {
 			        storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
-			        if(storeloop > 1){
-				        storebw.newLine();
-				        storeloop--;
-			        }
+			        storebw.newLine();
 		        }
 				storebw.close();
 				//商品別の売り上げ確認//
@@ -388,10 +385,7 @@ public class Kadai3 {
 			        //商品別の売り上げの並び替え終了後//
 			        for(Entry<String, String> t : goodsentries) {
 				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
-				        if(goodsloop > 1){
-					        goodsbw.newLine();
-					        goodsloop--;
-				        }
+				        storebw.newLine();
 			        }
 					goodsbw.close();
 		}
