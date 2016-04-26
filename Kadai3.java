@@ -1,11 +1,12 @@
 package jp.co.iccom.ino_kouki.calculate_sales;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Kadai3 {
-	private static BufferedReader storebr, goodsbr, calcbr, calcfr;
+	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, goodsbw;
 
 	public static void main(String[] args) throws IOException{
 		List<String> storelist = new ArrayList<String>();
@@ -117,7 +118,6 @@ public class Kadai3 {
 				goodslistname.add(goodsarray[1]);
 				goodsstr = goodsbr.readLine();
 			}
-			System.out.println("c1:" + goodslist);
 		}
 
 		catch(FileNotFoundException e){
@@ -188,8 +188,6 @@ public class Kadai3 {
 				calcbr.close();
 			}
 
-			System.out.println("c2:" + goodslist);
-
 			for(int i = 0 ; i < count ; i++){
 				String strkeytemp = null;
 				long longkeytemp;
@@ -237,6 +235,7 @@ public class Kadai3 {
 					//存在しないときindexnumに-1が入る//
 					indexnum = goodslist.indexOf(data.get(i));
 					if(indexnum == -1){
+						System.out.println(Arrays.asList(files[i/3]) + "の商品コードが不正です");
 						return;
 					}
 
@@ -267,8 +266,6 @@ public class Kadai3 {
 					}
 				}
 			}
-			System.out.println("c3:" + goodslist);
-			System.out.println("c4:" + goodscodemap);
 		}
 
 		catch(Exception e){
@@ -284,12 +281,14 @@ public class Kadai3 {
 		//ファイル出力//
 		try{
 			//支店別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputStoreFileName = args[0] + File.separator + "branch.out";
-			PrintWriter storepw = new PrintWriter(outputStoreFileName);
+			File storefile = new File(args[0] + File.separator + "branch.out");
+			FileWriter storefw = new FileWriter(storefile);
+			BufferedWriter storebw = new BufferedWriter(storefw);
 
 			//商品別、出力ファイル名を作成、ファイルオブジェクトの生成//
-			String outputGoodsFileName = args[0] + File.separator + "commodity.out";
-			PrintWriter goodspw = new PrintWriter(outputGoodsFileName);
+			File goodsfile = new File(args[0] + File.separator + "commodity.out");;
+			FileWriter goodsfw = new FileWriter(goodsfile);
+			BufferedWriter goodsbw = new BufferedWriter(goodsfw);
 
 			//支店別の売り上げ確認//
 			for(int i = 0 ; i < storelist.size() ; i++){
@@ -325,10 +324,9 @@ public class Kadai3 {
 		        	int number = 0;
 
 		            number = Integer.parseInt(s.getKey()) - 1;
-			        storepw.println(s.getKey() + "," + storelistname.get(number) + "," + s.getValue());
+			        storebw.write(s.getKey() + "," + storelistname.get(number) + "," + s.getValue() + "\r\n");
 		        }
-		        storepw.close();
-
+				storebw.close();
 				//商品別の売り上げ確認//
 				for(int i = 0 ; i < goodslist.size() ; i++){
 					if(goodscodemap.get(goodslist.get(i)) == null){
@@ -359,9 +357,9 @@ public class Kadai3 {
 
 			        //商品別の売り上げの並び替え終了後//
 			        for(Entry<String, String> t : goodsentries) {
-				        goodspw.println(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
+				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue() + "\r\n");
 			        }
-			        goodspw.close();
+					goodsbw.close();
 		}
 
 		catch(Exception e){
@@ -370,6 +368,8 @@ public class Kadai3 {
 		}
 
 		finally{
+			if(storebw != null) {storebw.close();}
+			if(goodsbw != null) {goodsbw.close();}
 		}
 	}
 }
