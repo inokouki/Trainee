@@ -257,64 +257,32 @@ public class Kadai3 {
 			BufferedWriter goodsbw = ReadyWriteFile("commodity.out");
 
 			//支店別売り上げの並び替え//
-			List<Map.Entry<String,String>> entries =
+			List<Map.Entry<String,String>> storeentries =
 		              new ArrayList<Map.Entry<String,String>>(storecodemap.entrySet());
-		        Collections.sort(entries, new Comparator<Map.Entry<String,String>>() {
+			SortEntryMap(storeentries);
 
-		        	long e1 = 0, e2 = 0;
-
-		            @Override
-		            public int compare(
-		                  Entry<String,String> entry1, Entry<String,String> entry2) {
-		            	e1 = Long.parseLong(entry2.getValue());
-		            	e2 = Long.parseLong(entry1.getValue());
-		            	if(e1 > e2){
-		            		return 1;
-		            	} else if(e1 == e2){
-		            		return 0;
-		            	} else {
-		            		return -1;
-		            	}
-		            }
-		        });
-
-		        //支店別の売り上げの並び替え終了後//
-		        for(Entry<String, String> s : entries) {
-			        storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
-			        if(storeloop > 1){
- 				        storebw.newLine();
- 				        storeloop--;}
+		    //支店別の売り上げの並び替え終了後//
+			for(Entry<String, String> s : storeentries) {
+				storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
+				if(storeloop > 1){
+					storebw.newLine();
+					storeloop--;}
 		        }
-				storebw.close();
+			storebw.close();
 
-				//商品別売り上げの並び替え//
-				List<Map.Entry<String,String>> goodsentries =
-			              new ArrayList<Map.Entry<String,String>>(goodscodemap.entrySet());
-			        Collections.sort(goodsentries, new Comparator<Map.Entry<String,String>>() {
+			//商品別売り上げの並び替え//
+			List<Map.Entry<String,String>> goodsentries =
+					new ArrayList<Map.Entry<String,String>>(goodscodemap.entrySet());
 
-			        	long e1 = 0, e2 = 0;
-			            @Override
-			            public int compare(
-			                  Entry<String,String> entry1, Entry<String,String> entry2) {
-			            	e1 = Long.parseLong(entry2.getValue());
-			            	e2 = Long.parseLong(entry1.getValue());
-			            	if(e1 > e2){
-			            		return 1;
-			            	} else if(e1 == e2){
-			            		return 0;
-			            	} else {
-			            		return -1;
-			            	}
-			            }
-			        });
-			        //商品別の売り上げの並び替え終了後//
-			        for(Entry<String, String> t : goodsentries) {
-				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
-				        if(goodsloop > 1){
- 					        goodsbw.newLine();
- 					        goodsloop--;}
-			        }
-					goodsbw.close();
+			SortEntryMap(goodsentries);
+			//商品別の売り上げの並び替え終了後//
+			for(Entry<String, String> t : goodsentries) {
+				goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
+				if(goodsloop > 1){
+					goodsbw.newLine();
+					goodsloop--;}
+			}
+			goodsbw.close();
 		}
 
 		catch(IOException e){
@@ -380,6 +348,26 @@ public class Kadai3 {
 			System.out.println("予期せぬエラーです");
 		}
 		return str;
+	}
+
+	//引数(mapのentry)から並び替えを行うメソッド//
+	public static void SortEntryMap(List<Map.Entry<String,String>> entries){
+        Collections.sort(entries, new Comparator<Map.Entry<String,String>>() {
+        	long e1 = 0, e2 = 0;
+            @Override
+            public int compare(
+                  Entry<String,String> entry1, Entry<String,String> entry2) {
+            	e1 = Long.parseLong(entry2.getValue());
+            	e2 = Long.parseLong(entry1.getValue());
+            	if(e1 > e2){
+            		return 1;
+            	} else if(e1 == e2){
+            		return 0;
+            	} else {
+            		return -1;
+            	}
+            }
+        });
 	}
 }
 
