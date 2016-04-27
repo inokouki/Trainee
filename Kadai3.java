@@ -19,61 +19,43 @@ public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, earnbr, earnfr;
 	public static HashMap<String, String> storecodemap = new HashMap<String, String>();
 	public static HashMap<String, String> goodscodemap = new HashMap<String, String>();
+	public static HashMap<String, String> goodsmap = new HashMap<String, String>();
+	public static HashMap<String, String> storemap = new HashMap<String, String>();
+	public static List<String> storelist = new ArrayList<String>();
+	public static List<String> storelistname = new ArrayList<String>();
+	public static List<String> goodslist = new ArrayList<String>();
+	public static List<String> goodslistname = new ArrayList<String>();
 	public static String path = null;
 
 	public static void main(String[] args) throws IOException{
-		List<String> storelist = new ArrayList<String>();
-		List<String> storelistname = new ArrayList<String>();
-		List<String> goodslist = new ArrayList<String>();
-		List<String> goodslistname = new ArrayList<String>();
-		HashMap<String, String> goodsmap = new HashMap<String, String>();
-		HashMap<String, String> storemap = new HashMap<String, String>();
-
 		//支店ファイル読み込み//
 		try{
 			String storearray[] = null;
 			File dir;
 
-			//コマンドライン引数の数が1つ以外のときエラー//
 			if(args.length == 1){
 				dir = new File(args[0]);
-				path = args[0];
-			} else {
+				path = args[0];}
+			else {
 				System.out.println("予期せぬエラーが発生しました");
-				return;
-			}
+				return;}
 
-			//コマンドライン引数がディレクトリ以外のときエラー//
 			if(!dir.isDirectory()){
 				System.out.println("予期せぬエラーが発生しました");
-				return;
-			}
+				return;}
 
-			//コマンドライン引数のパスのディレクトリ内のbranch.lstから読み込み//
-			storebr = FileRead("branch.lst");
+			storebr = ReadFile("branch.lst");
 			String storestr = storebr.readLine();
-
-			ArrayList<String> store = new ArrayList<String>();
 
 			//支店コード、支店名に分解//
 			while(storestr != null){
-				store.add(storestr);
 				storearray = storestr.split("," , 2);
 
 				//数字3桁ではない、カンマが1つ以外の、ときエラー処理//
 				if(!storearray[0].matches("\\d{3}") || storearray.length != 2){
 					System.out.println("支店定義ファイルのフォーマットが不正です");
-					storebr.close();
-					return;
-				}
-
-				storecodemap.put(storearray[0], "0");
-				storemap.put(storearray[0], storearray[1]);
-
-				storelist.add(storearray[0]);
-				storelistname.add(storearray[1]);
-
-				storestr = storebr.readLine();
+					return;}
+				storestr = PutDataToMap(storecodemap, storemap, storearray, storelist, storelistname, storebr);
 			}
 			storebr.close();
 		}
@@ -101,30 +83,19 @@ public class Kadai3 {
 		try{
 			String goodsarray[] = null;
 
-			goodsbr = FileRead("commodity.lst");
+			goodsbr = ReadFile("commodity.lst");
 			String goodsstr = goodsbr.readLine();
-
-			//ハッシュマップ作成//
-			ArrayList<String> goods = new ArrayList<String>();
 
 			//商品コード、商品名に分解//
 			while(goodsstr != null){
-				goods.add(goodsstr);
 				goodsarray = goodsstr.split("," , 2);
 
-				//商品コードが英数字8文字ではない、カンマが1つ以外の、ときエラー処理//
+				//商品コードが英数字8文字ではない、またはカンマが1つ以外のときエラー処理//
 				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
 					System.out.println("商品定義ファイルのフォーマットが不正です");
 					goodsbr.close();
-					return;
-				}
-
-				goodscodemap.put(goodsarray[0], "0");
-				goodsmap.put(goodsarray[0], goodsarray[1]);
-
-				goodslist.add(goodsarray[0]);
-				goodslistname.add(goodsarray[1]);
-				goodsstr = goodsbr.readLine();
+					return;}
+				goodsstr = PutDataToMap(goodscodemap, goodsmap, goodsarray, goodslist, goodslistname, goodsbr);
 			}
 		}
 
@@ -162,20 +133,15 @@ public class Kadai3 {
 
 			//sucnumにファイル名である8桁の数字を格納//
 			for(int i = 0 ; i < files.length ; i++){
-				for(int j = 0 ; j < 2 ; j++){
-					if(j == 0){
-						tempstr = files[i].split("\\.", 2);
-						sucnum.add(tempstr[j]);
-					}
-				}
+				tempstr = files[i].split("\\.", 2);
+				sucnum.add(tempstr[0]);
 
 				filenametemp = Integer.parseInt(sucnum.get(i));
 
 				//売り上げファイル名が連番になっているか、ディレクトリか、どうか検査//
 				if(filenametemp != i + 1 || filearray[i].isDirectory()){
 					System.out.println("売上ファイル名が連番になっていません");
-					return;
-				}
+					return;}
 			}
 
 			//数字8桁.rcdファイルの中身が3行以外はエラー//
@@ -183,7 +149,7 @@ public class Kadai3 {
 				String earnline = null;
 				ArrayList<String> earn = new ArrayList<String>();
 
-				earnbr = FileRead(files[i]);
+				earnbr = ReadFile(files[i]);
 
 				while((earnline = earnbr.readLine()) != null){
 					earn.add(earnline);
@@ -191,8 +157,7 @@ public class Kadai3 {
 
 				if(earn.size() != 3){
 					System.out.println(files[i] + "のフォーマットが不正です");
-					return;
-				}
+					return;}
 				earnbr.close();
 			}
 
@@ -201,28 +166,22 @@ public class Kadai3 {
 				int icount = 0;
 				String strkeytemp = null, line, storekey = null, goodskey = null, before = null;
 
-				calcbr = FileRead(files[i]);
+				calcbr = ReadFile(files[i]);
 
 				while((line = calcbr.readLine()) != null){
 					if(icount > 3){
 						System.out.println(files[i] + "のフォーマットが不正です");
-						calcbr.close();
-						return;
-					}
+						return;}
 
 					//icount=0,支店コードのときの集計//
 					if(icount == 0){
 						storekey = line;
 
-
 						//存在しないときindexnumに-1が入る//
 						indexnum = storelist.indexOf(storekey);
 						if(indexnum == -1){
 							System.out.println(files[i] + "の支店コードが不正です");
-							calcfr.close();
-							calcbr.close();
-							return;
-						}
+							return;}
 					}
 
 					//icount=1,商品コードのときの集計//
@@ -233,10 +192,7 @@ public class Kadai3 {
 						indexnum = goodslist.indexOf(goodskey);
 						if(indexnum == -1){
 							System.out.println(files[i] + "の商品コードが不正です");
-							calcfr.close();
-							calcbr.close();
-							return;
-						}
+							return;}
 					}
 
 					//icount=2,売り上げ数値のときの集計処理//
@@ -252,17 +208,11 @@ public class Kadai3 {
 							//合計売り上げが11桁以上のときエラー処理//
 							if(strkeytemp.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
-								calcfr.close();
-								calcbr.close();
-								return;
-							}
+								return;}
 							storecodemap.put(storekey, strkeytemp);
 						} else {
 							System.out.println(files[i] + "の支店コードが不正です");
-							calcfr.close();
-							calcbr.close();
-							return;
-						}
+							return;}
 
 						//商品コードで既にマップが存在しているかどうか//
 						if(goodscodemap.containsKey(goodskey)){
@@ -272,26 +222,18 @@ public class Kadai3 {
 							//合計売り上げが11桁以上のときエラー処理//
 							if(strkeytemp.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
-								calcfr.close();
-								calcbr.close();
-								return;
-							}
+								return;}
 							goodscodemap.put(goodskey, strkeytemp);
 						} else {
 							System.out.println(files[i] + "の商品コードが不正です");
-							calcfr.close();
-							calcbr.close();
-							return;
-						}
+							return;}
 					}
 					icount++;
 				}
 
 				if(icount != 3){
 						System.out.println(files[i] + "のフォーマットが不正です");
-						calcbr.close();
-						return;
-				}
+						return;}
 				calcbr.close();
 			}
 		}
@@ -311,9 +253,8 @@ public class Kadai3 {
 		try{
 			int storeloop = storecodemap.size(), goodsloop = goodscodemap.size();
 
-			//支店別,商品別の出力ファイルを生成する準備をする//
-			BufferedWriter storebw = readyWriteFile("branch.out");
-			BufferedWriter goodsbw = readyWriteFile("commodity.out");
+			BufferedWriter storebw = ReadyWriteFile("branch.out");
+			BufferedWriter goodsbw = ReadyWriteFile("commodity.out");
 
 			//支店別売り上げの並び替え//
 			List<Map.Entry<String,String>> entries =
@@ -342,8 +283,7 @@ public class Kadai3 {
 			        storebw.write(s.getKey() + "," + storemap.get(s.getKey()) + "," + s.getValue());
 			        if(storeloop > 1){
  				        storebw.newLine();
- 				        storeloop--;
- 			        }
+ 				        storeloop--;}
 		        }
 				storebw.close();
 
@@ -372,8 +312,7 @@ public class Kadai3 {
 				        goodsbw.write(t.getKey() + "," + goodsmap.get(t.getKey()) + "," + t.getValue());
 				        if(goodsloop > 1){
  					        goodsbw.newLine();
- 					        goodsloop--;
- 				        }
+ 					        goodsloop--;}
 			        }
 					goodsbw.close();
 		}
@@ -401,7 +340,7 @@ public class Kadai3 {
 	}
 
 	//引数(読込するファイル名)から、BufferedReader型を返却するメソッド//
-	public static BufferedReader FileRead(String FileName){
+	public static BufferedReader ReadFile(String FileName){
 		FileReader fr = null;
 		try {
 			fr = new FileReader(path + File.separator + FileName);
@@ -413,7 +352,7 @@ public class Kadai3 {
 	}
 
 	//引数(出力するファイル名)から、BufferedWriter型を返却するメソッド//
-	public static BufferedWriter readyWriteFile(String FileName){
+	public static BufferedWriter ReadyWriteFile(String FileName){
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(path + File.separator + FileName);
@@ -423,6 +362,24 @@ public class Kadai3 {
 		BufferedWriter bw = new BufferedWriter(fw);
 
 		return bw;
+	}
+
+	//引数(売り上げ格納map,[コード・名称]連結map,分割後文字列の配列,コードリスト、具体名リスト, BufferedReader変数)//
+	public static String PutDataToMap(HashMap<String,String> initializationmap, HashMap<String,String> normalmap,
+			String[] array, List<String> list, List<String> listname, BufferedReader br){
+		String str = null;
+
+		initializationmap.put(array[0], "0");
+		normalmap.put(array[0], array[1]);
+		list.add(array[0]);
+		listname.add(array[1]);
+
+		try {
+			str = br.readLine();
+		} catch (IOException e) {
+			System.out.println("予期せぬエラーです");
+		}
+		return str;
 	}
 }
 
