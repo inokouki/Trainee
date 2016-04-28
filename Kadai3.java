@@ -16,19 +16,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Kadai3 {
-	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, earnbr, earnfr;
+	private static BufferedReader storebr, goodsbr, calcbr, earnbr;
+	private static BufferedWriter storebw, goodsbw;
 	public static HashMap<String, Long> storecodemap = new HashMap<String, Long>();
 	public static HashMap<String, Long> goodscodemap = new HashMap<String, Long>();
 	public static HashMap<String, String> goodsmap = new HashMap<String, String>();
 	public static HashMap<String, String> storemap = new HashMap<String, String>();
 	public static String path = null;
 
-	public static void main(String[] args) throws Exception{
+	public static void main (String[] args) throws Exception{
 		try{
 			String storearray[] = null;
 			File dir;
 
-			if(args.length == 1){
+			if (args.length == 1){
 				dir = new File(args[0]);
 				path = args[0];
 			} else {
@@ -36,39 +37,38 @@ public class Kadai3 {
 				return;
 			}
 
-			if(!dir.isDirectory()){
+			if (!dir.isDirectory()){
 				System.out.println("予期せぬエラーが発生しました");
 				return;
 			}
 
 			storebr = readDefinitionFile("branch.lst", "支店");
-			if(storebr == null) return;
+			if (storebr == null) return;
 			String storestr = storebr.readLine();
 
 			while(storestr != null){
 				storearray = storestr.split("," , 0);
 
-				if(!storearray[0].matches("\\d{3}") || storearray.length != 2){
+				if (!storearray[0].matches("\\d{3}") || storearray.length != 2){
 					System.out.println("支店定義ファイルのフォーマットが不正です");
 					return;
 				}
 				storestr = putDataToMap(storecodemap, storemap, storearray, storebr);
 			}
-			storebr.close();
 		}
-		catch(FileNotFoundException e){
+		catch (FileNotFoundException e){
 			System.out.println("支店定義ファイルが存在しません");
 			return;
 		}
-		catch(ArrayIndexOutOfBoundsException e){
+		catch (ArrayIndexOutOfBoundsException e){
 			System.out.println("支店定義ファイルのフォーマットが不正です");
 			return;
 		}
-		catch(IOException e){
+		catch (IOException e){
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
-		catch(NullPointerException e){
+		catch (NullPointerException e){
 			System.out.println("支店定義ファイルが存在しません");
 		}
 		finally{
@@ -79,29 +79,28 @@ public class Kadai3 {
 			String goodsarray[] = null;
 
 			goodsbr = readDefinitionFile("commodity.lst", "商品");
-			if(goodsbr == null) return;
+			if (goodsbr == null) return;
 			String goodsstr = goodsbr.readLine();
 
-			while(goodsstr != null){
+			while (goodsstr != null){
 				goodsarray = goodsstr.split("," , 0);
 
-				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
+				if (!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
 					System.out.println("商品定義ファイルのフォーマットが不正です");
-					goodsbr.close();
 					return;
 				}
 				goodsstr = putDataToMap(goodscodemap, goodsmap, goodsarray, goodsbr);
 			}
 		}
-		catch(FileNotFoundException e){
+		catch (FileNotFoundException e){
 			System.out.println("商品定義ファイルが存在しません");
 			return;
 		}
-		catch(ArrayIndexOutOfBoundsException e){
+		catch (ArrayIndexOutOfBoundsException e){
 			System.out.println("商品定義ファイルのフォーマットが不正です");
 			return;
 		}
-		catch(IOException e){
+		catch (IOException e){
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
@@ -120,7 +119,7 @@ public class Kadai3 {
 			File[] filearray = calcfile.listFiles();
 			String[]files = calcfile.list(new Filter());
 
-			for(int i=0; i<files.length; i++){
+			for (int i=0; i<files.length; i++){
 				ArrayList<String> earn = new ArrayList<String>();
 				int icount = 0;
 				String line, storekey=null, goodskey=null, earnline=null;
@@ -130,52 +129,51 @@ public class Kadai3 {
 				sucnum.add(tempstr[0]);
 				filenametemp = Integer.parseInt(sucnum.get(i));
 
-				if(filenametemp != i+1 || filearray[i].isDirectory()){
+				if (filenametemp != i+1 || filearray[i].isDirectory()){
 					System.out.println("売上ファイル名が連番になっていません");
 					return;
 				}
 
 				earnbr = readFile(files[i]);
-				while((earnline = earnbr.readLine()) != null){
+				while ((earnline = earnbr.readLine()) != null){
 					earn.add(earnline);
 				}
-				if(earn.size() != 3){
+				if (earn.size() != 3){
 					System.out.println(files[i] + "のフォーマットが不正です");
 					return;
 				}
-				earnbr.close();
 
 				calcbr = readFile(files[i]);
-				while((line = calcbr.readLine()) != null){
-					if(icount > 3){
+				while ((line = calcbr.readLine()) != null){
+					if (icount > 3){
 						System.out.println(files[i] + "のフォーマットが不正です");
 						return;
 					}
-					if(icount == 0){
+					if (icount == 0){
 						storekey = line;
 
-						if(!storecodemap.containsKey(storekey)){
+						if (!storecodemap.containsKey(storekey)){
 							System.out.println(files[i] + "の支店コードが不正です");
 							return;
 						}
 					}
-					if(icount == 1){
+					if (icount == 1){
 						goodskey = line;
 
-						if(!goodscodemap.containsKey(goodskey)){
+						if (!goodscodemap.containsKey(goodskey)){
 							System.out.println(files[i] + "の商品コードが不正です");
 							return;
 						}
 					}
-					if(icount == 2){
+					if (icount == 2){
 						valuetemp = Long.parseLong(line);
 
-						if(storecodemap.containsKey(storekey)){
+						if (storecodemap.containsKey(storekey)){
 							before = storecodemap.get(storekey);
 							strkeytemp = add(before, valuetemp);
 							checkvalue = String.valueOf(strkeytemp);
 
-							if(checkvalue.matches("^\\d{11,}")){
+							if (checkvalue.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
 								return;
 							}
@@ -184,12 +182,12 @@ public class Kadai3 {
 							System.out.println(files[i] + "の支店コードが不正です");
 							return;
 						}
-						if(goodscodemap.containsKey(goodskey)){
+						if (goodscodemap.containsKey(goodskey)){
 							before = goodscodemap.get(goodskey);
 							strkeytemp = add(before, valuetemp);
 							checkvalue = String.valueOf(strkeytemp);
 
-							if(checkvalue.matches("^\\d{11,}")){
+							if (checkvalue.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
 								return;}
 							goodscodemap.put(goodskey, strkeytemp);
@@ -200,20 +198,18 @@ public class Kadai3 {
 					}
 					icount++;
 				}
-				if(icount != 3){
+				if (icount != 3){
 						System.out.println(files[i] + "のフォーマットが不正です");
 						return;
 				}
 			}
 		}
-		catch(IOException e){
+		catch (IOException e){
 			System.out.println("予期せぬエラーが発生しました");
 		}
 		finally{
 			if(calcbr != null) calcbr.close();
-			if(calcfr != null) calcfr.close();
 			if(earnbr != null) earnbr.close();
-			if(earnfr != null) earnfr.close();
 		}
 
 		try{
@@ -222,35 +218,34 @@ public class Kadai3 {
 			List<Map.Entry<String,Long>> goodsentries =
 					new ArrayList<Map.Entry<String,Long>>(goodscodemap.entrySet());
 
-			BufferedWriter storebw = readyWriteFile("branch.out");
-			if(storebw == null){
+			storebw = readyWriteFile("branch.out");
+			if (storebw == null){
 				System.out.println("予期せぬエラーが発生しました");
 				return;
 			}
-			BufferedWriter goodsbw = readyWriteFile("commodity.out");
-			if(goodsbw == null){
+			goodsbw = readyWriteFile("commodity.out");
+			if (goodsbw == null){
 				System.out.println("予期せぬエラーが発生しました");
+				return;
 			}
 
 			sortEntryMap(storeentries);
 			sortEntryMap(goodsentries);
 
-			for(Entry<String, Long> s : storeentries) {
+			for (Entry<String, Long> s : storeentries) {
 				writeFile(s, storebw, storemap);
 		    }
-			storebw.close();
-
-			for(Entry<String, Long> t : goodsentries) {
+			for (Entry<String, Long> t : goodsentries) {
 				writeFile(t, goodsbw, goodsmap);
 		    }
-			goodsbw.close();
 		}
-		catch(IOException e){
+		catch (NullPointerException e){
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
 		finally{
 			if(storebw != null) storebw.close();
+			if(goodsbw != null) goodsbw.close();
 		}
 	}
 	public static Long add(long beforevalue, long additionalvalue){
@@ -269,7 +264,7 @@ public class Kadai3 {
 		try{
 			br = new BufferedReader(fr);
 		}
-		catch(NullPointerException e){
+		catch (NullPointerException e){
 			System.out.println(Name + "定義ファイルが存在しません");
 			return br = null;
 		}
@@ -284,10 +279,10 @@ public class Kadai3 {
 		} catch (FileNotFoundException e) {
 			System.out.println("予期せぬエラーが発生しました");
 		}
-		try{
+		try {
 			br = new BufferedReader(fr);
 		}
-		catch(NullPointerException e){
+		catch (NullPointerException e){
 			System.out.println("予期せぬエラーが発生しました");
 		}
 		return br;
