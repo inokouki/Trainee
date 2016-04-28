@@ -294,9 +294,9 @@ public class Kadai3 {
             }
         });
 	}
-	public static void writeFile(Entry<String, String> x, int loop, BufferedWriter bw, HashMap<String,String> map){
+	public static void writeFile(Entry<String, String> entrymap, int loop, BufferedWriter bw, HashMap<String,String> map){
 		try {
-			bw.write(x.getKey() + "," + map.get(x.getKey()) + "," + x.getValue());
+			bw.write(entrymap.getKey() + "," + map.get(entrymap.getKey()) + "," + entrymap.getValue());
 			if(loop > 1){
 				bw.newLine();
 			}
