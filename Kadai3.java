@@ -3,13 +3,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,7 +41,6 @@ public class Kadai3 {
 				return;
 			}
 
-			if(isFileLockCheck("branch.lst")) return;
 			storebr = readDefinitionFile("branch.lst", "支店");
 			if(storebr == null) return;
 			String storestr = storebr.readLine();
@@ -82,7 +78,6 @@ public class Kadai3 {
 		try{
 			String goodsarray[] = null;
 
-			if(isFileLockCheck("branch.lst")) return;
 			goodsbr = readDefinitionFile("commodity.lst", "商品");
 			if(goodsbr == null) return;
 			String goodsstr = goodsbr.readLine();
@@ -228,7 +223,14 @@ public class Kadai3 {
 					new ArrayList<Map.Entry<String,Long>>(goodscodemap.entrySet());
 
 			BufferedWriter storebw = readyWriteFile("branch.out");
+			if(storebw == null){
+				System.out.println("予期せぬエラーが発生しました");
+				return;
+			}
 			BufferedWriter goodsbw = readyWriteFile("commodity.out");
+			if(goodsbw == null){
+				System.out.println("予期せぬエラーが発生しました");
+			}
 
 			sortEntryMap(storeentries);
 			sortEntryMap(goodsentries);
@@ -293,12 +295,13 @@ public class Kadai3 {
 
 	public static BufferedWriter readyWriteFile(String FileName){
 		FileWriter fw = null;
+		BufferedWriter bw = null;
 		try {
 			fw = new FileWriter(path + File.separator + FileName);
+			bw = new BufferedWriter(fw);
 		} catch (IOException e) {
-			System.out.println("予期せぬエラーが発生しました");
+			return bw = null;
 		}
-		BufferedWriter bw = new BufferedWriter(fw);
 		return bw;
 	}
 	public static String putDataToMap(HashMap<String,Long> initializationmap, HashMap<String,String> normalmap,
@@ -311,7 +314,7 @@ public class Kadai3 {
 		try {
 			str = br.readLine();
 		} catch (IOException e) {
-			System.out.println("予期せぬエラーが発生しました");
+			return str = null;
 		}
 		return str;
 	}
@@ -334,34 +337,6 @@ public class Kadai3 {
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
-	}
-
-	public static boolean isFileLockCheck(String Filename) throws Exception{
-
-		File lock = new File(Filename);
-		lock.deleteOnExit();
-		FileOutputStream fs = new FileOutputStream(lock);
-
-		try{
-			FileChannel ch = fs.getChannel();
-			FileLock FileLock = null;
-			final long TIMEOUT=3000L;
-			final long WAIT = 100L;
-			for(int i=0; i<(TIMEOUT/WAIT); i++){
-				if(null != (FileLock=ch.tryLock())){
-				break;
-				}
-				Thread.sleep(WAIT);
-			}
-			if(!FileLock.isValid()){
-				throw new Exception();
-			}
-		}
-		finally{
-			fs.close();
-		}
-
-		return false;
 	}
 }
 class Filter implements FilenameFilter{
