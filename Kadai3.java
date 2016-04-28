@@ -41,11 +41,12 @@ public class Kadai3 {
 				return;
 			}
 
-			storebr = readFile("branch.lst");
+			storebr = readDefinitionFile("branch.lst", "支店");
+			if(storebr == null) return;
 			String storestr = storebr.readLine();
 
 			while(storestr != null){
-				storearray = storestr.split("," , 2);
+				storearray = storestr.split("," , 0);
 
 				if(!storearray[0].matches("\\d{3}") || storearray.length != 2){
 					System.out.println("支店定義ファイルのフォーマットが不正です");
@@ -67,6 +68,9 @@ public class Kadai3 {
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
+		catch(NullPointerException e){
+			System.out.println("支店定義ファイルが存在しません");
+		}
 		finally{
 			if(storebr != null) storebr.close();
 		}
@@ -74,11 +78,12 @@ public class Kadai3 {
 		try{
 			String goodsarray[] = null;
 
-			goodsbr = readFile("commodity.lst");
+			goodsbr = readDefinitionFile("commodity.lst", "商品");
+			if(goodsbr == null) return;
 			String goodsstr = goodsbr.readLine();
 
 			while(goodsstr != null){
-				goodsarray = goodsstr.split("," , 2);
+				goodsarray = goodsstr.split("," , 0);
 
 				if(!goodsarray[0].matches("[a-zA-Z0-9]{8}") || goodsarray.length != 2){
 					System.out.println("商品定義ファイルのフォーマットが不正です");
@@ -208,7 +213,6 @@ public class Kadai3 {
 		}
 
 		try{
-			int storeloop = storecodemap.size(), goodsloop = goodscodemap.size();
 			List<Map.Entry<String,String>> storeentries =
 					new ArrayList<Map.Entry<String,String>>(storecodemap.entrySet());
 			List<Map.Entry<String,String>> goodsentries =
@@ -220,14 +224,12 @@ public class Kadai3 {
 			sortEntryMap(goodsentries);
 
 			for(Entry<String, String> s : storeentries) {
-				writeFile(s, storeloop, storebw, storemap);
-				storeloop--;
+				writeFile(s, storebw, storemap);
 		    }
 			storebw.close();
 
 			for(Entry<String, String> t : goodsentries) {
-				writeFile(t, goodsloop, goodsbw, goodsmap);
-				goodsloop--;
+				writeFile(t, goodsbw, goodsmap);
 		    }
 			goodsbw.close();
 		}
@@ -249,16 +251,43 @@ public class Kadai3 {
 
 		return after;
 	}
+	public static BufferedReader readDefinitionFile(String FileName, String Name){
+		FileReader fr = null;
+		BufferedReader br = null;
+		try {
+			fr = new FileReader(path + File.separator + FileName);
+		} catch (FileNotFoundException e) {
+			System.out.println(Name + "定義ファイルが存在しません");
+			return br = null;
+		}
+
+		try{
+			br = new BufferedReader(fr);
+		}
+		catch(NullPointerException e){
+			System.out.println(Name + "定義ファイルが存在しません");
+			return br = null;
+		}
+		return br;
+	}
+
 	public static BufferedReader readFile(String FileName){
 		FileReader fr = null;
+		BufferedReader br = null;
 		try {
 			fr = new FileReader(path + File.separator + FileName);
 		} catch (FileNotFoundException e) {
 			System.out.println("予期せぬエラーが発生しました");
 		}
-		BufferedReader br = new BufferedReader(fr);
+		try{
+			br = new BufferedReader(fr);
+		}
+		catch(NullPointerException e){
+			System.out.println("予期せぬエラーが発生しました");
+		}
 		return br;
 	}
+
 	public static BufferedWriter readyWriteFile(String FileName){
 		FileWriter fw = null;
 		try {
@@ -294,12 +323,10 @@ public class Kadai3 {
             }
         });
 	}
-	public static void writeFile(Entry<String, String> entrymap, int loop, BufferedWriter bw, HashMap<String,String> map){
+	public static void writeFile(Entry<String, String> entrymap, BufferedWriter bw, HashMap<String,String> map){
 		try {
 			bw.write(entrymap.getKey() + "," + map.get(entrymap.getKey()) + "," + entrymap.getValue());
-			if(loop > 1){
-				bw.newLine();
-			}
+			bw.newLine();
 		} catch (IOException e) {
 			System.out.println("予期せぬエラーが発生しました");
 			return;
