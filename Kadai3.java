@@ -3,10 +3,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,13 +20,13 @@ import java.util.Map.Entry;
 
 public class Kadai3 {
 	private static BufferedReader storebr, goodsbr, calcbr, calcfr, storebw, earnbr, earnfr;
-	public static HashMap<String, String> storecodemap = new HashMap<String, String>();
-	public static HashMap<String, String> goodscodemap = new HashMap<String, String>();
+	public static HashMap<String, Long> storecodemap = new HashMap<String, Long>();
+	public static HashMap<String, Long> goodscodemap = new HashMap<String, Long>();
 	public static HashMap<String, String> goodsmap = new HashMap<String, String>();
 	public static HashMap<String, String> storemap = new HashMap<String, String>();
 	public static String path = null;
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws Exception{
 		try{
 			String storearray[] = null;
 			File dir;
@@ -41,6 +44,7 @@ public class Kadai3 {
 				return;
 			}
 
+			if(isFileLockCheck("branch.lst")) return;
 			storebr = readDefinitionFile("branch.lst", "支店");
 			if(storebr == null) return;
 			String storestr = storebr.readLine();
@@ -78,6 +82,7 @@ public class Kadai3 {
 		try{
 			String goodsarray[] = null;
 
+			if(isFileLockCheck("branch.lst")) return;
 			goodsbr = readDefinitionFile("commodity.lst", "商品");
 			if(goodsbr == null) return;
 			String goodsstr = goodsbr.readLine();
@@ -114,6 +119,7 @@ public class Kadai3 {
 			List<String> sucnum = new ArrayList<String>();
 			String[] tempstr = null;
 			long valuetemp = 0;
+			String checkvalue=null;
 
 			File calcfile = new File(args[0]);
 			File[] filearray = calcfile.listFiles();
@@ -122,7 +128,8 @@ public class Kadai3 {
 			for(int i=0; i<files.length; i++){
 				ArrayList<String> earn = new ArrayList<String>();
 				int icount = 0;
-				String strkeytemp=null, line, storekey=null, goodskey=null, before=null, earnline=null;
+				String line, storekey=null, goodskey=null, earnline=null;
+				Long before=null, strkeytemp=null;
 
 				tempstr = files[i].split("\\.", 2);
 				sucnum.add(tempstr[0]);
@@ -171,8 +178,9 @@ public class Kadai3 {
 						if(storecodemap.containsKey(storekey)){
 							before = storecodemap.get(storekey);
 							strkeytemp = add(before, valuetemp);
+							checkvalue = String.valueOf(strkeytemp);
 
-							if(strkeytemp.matches("^\\d{11,}")){
+							if(checkvalue.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
 								return;
 							}
@@ -184,8 +192,9 @@ public class Kadai3 {
 						if(goodscodemap.containsKey(goodskey)){
 							before = goodscodemap.get(goodskey);
 							strkeytemp = add(before, valuetemp);
+							checkvalue = String.valueOf(strkeytemp);
 
-							if(strkeytemp.matches("^\\d{11,}")){
+							if(checkvalue.matches("^\\d{11,}")){
 								System.out.println("合計金額が10桁を超えました");
 								return;}
 							goodscodemap.put(goodskey, strkeytemp);
@@ -213,22 +222,23 @@ public class Kadai3 {
 		}
 
 		try{
-			List<Map.Entry<String,String>> storeentries =
-					new ArrayList<Map.Entry<String,String>>(storecodemap.entrySet());
-			List<Map.Entry<String,String>> goodsentries =
-					new ArrayList<Map.Entry<String,String>>(goodscodemap.entrySet());
+			List<Map.Entry<String,Long>> storeentries =
+					new ArrayList<Map.Entry<String,Long>>(storecodemap.entrySet());
+			List<Map.Entry<String,Long>> goodsentries =
+					new ArrayList<Map.Entry<String,Long>>(goodscodemap.entrySet());
 
 			BufferedWriter storebw = readyWriteFile("branch.out");
 			BufferedWriter goodsbw = readyWriteFile("commodity.out");
+
 			sortEntryMap(storeentries);
 			sortEntryMap(goodsentries);
 
-			for(Entry<String, String> s : storeentries) {
+			for(Entry<String, Long> s : storeentries) {
 				writeFile(s, storebw, storemap);
 		    }
 			storebw.close();
 
-			for(Entry<String, String> t : goodsentries) {
+			for(Entry<String, Long> t : goodsentries) {
 				writeFile(t, goodsbw, goodsmap);
 		    }
 			goodsbw.close();
@@ -241,15 +251,8 @@ public class Kadai3 {
 			if(storebw != null) storebw.close();
 		}
 	}
-	public static String add(String beforevalue, long additionalvalue){
-		String after = null;
-		long temp = 0, longkeytemp = 0;
-
-		temp = Long.parseLong(beforevalue);
-		longkeytemp = additionalvalue + temp;
-		after = String.valueOf(longkeytemp);
-
-		return after;
+	public static Long add(long beforevalue, long additionalvalue){
+		return (additionalvalue + beforevalue);
 	}
 	public static BufferedReader readDefinitionFile(String FileName, String Name){
 		FileReader fr = null;
@@ -298,11 +301,11 @@ public class Kadai3 {
 		BufferedWriter bw = new BufferedWriter(fw);
 		return bw;
 	}
-	public static String putDataToMap(HashMap<String,String> initializationmap, HashMap<String,String> normalmap,
+	public static String putDataToMap(HashMap<String,Long> initializationmap, HashMap<String,String> normalmap,
 			String[] array, BufferedReader br){
 		String str = null;
 
-		initializationmap.put(array[0], "0");
+		initializationmap.put(array[0], (long) 0);
 		normalmap.put(array[0], array[1]);
 
 		try {
@@ -312,18 +315,18 @@ public class Kadai3 {
 		}
 		return str;
 	}
-	public static void sortEntryMap(List<Map.Entry<String,String>> entries){
-        Collections.sort(entries, new Comparator<Map.Entry<String,String>>() {
+	public static void sortEntryMap(List<Map.Entry<String,Long>> entries){
+        Collections.sort(entries, new Comparator<Map.Entry<String,Long>>() {
             @Override
             public int compare(
-                  Entry<String,String> entry1, Entry<String,String> entry2) {
-            	Long e1 = Long.parseLong(entry2.getValue());
-            	Long e2 = Long.parseLong(entry1.getValue());
+                  Entry<String,Long> entry1, Entry<String,Long> entry2) {
+            	Long e1 = entry2.getValue();
+            	Long e2 = entry1.getValue();
             	return e1.compareTo(e2);
             }
         });
 	}
-	public static void writeFile(Entry<String, String> entrymap, BufferedWriter bw, HashMap<String,String> map){
+	public static void writeFile(Entry<String, Long> entrymap, BufferedWriter bw, HashMap<String,String> map){
 		try {
 			bw.write(entrymap.getKey() + "," + map.get(entrymap.getKey()) + "," + entrymap.getValue());
 			bw.newLine();
@@ -331,6 +334,34 @@ public class Kadai3 {
 			System.out.println("予期せぬエラーが発生しました");
 			return;
 		}
+	}
+
+	public static boolean isFileLockCheck(String Filename) throws Exception{
+
+		File lock = new File(Filename);
+		lock.deleteOnExit();
+		FileOutputStream fs = new FileOutputStream(lock);
+
+		try{
+			FileChannel ch = fs.getChannel();
+			FileLock FileLock = null;
+			final long TIMEOUT=3000L;
+			final long WAIT = 100L;
+			for(int i=0; i<(TIMEOUT/WAIT); i++){
+				if(null != (FileLock=ch.tryLock())){
+				break;
+				}
+				Thread.sleep(WAIT);
+			}
+			if(!FileLock.isValid()){
+				throw new Exception();
+			}
+		}
+		finally{
+			fs.close();
+		}
+
+		return false;
 	}
 }
 class Filter implements FilenameFilter{
