@@ -1,0 +1,1 @@
+CREATE SCHEMA `kadai4` ;
