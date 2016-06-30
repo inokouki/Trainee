@@ -1,0 +1,17 @@
+<%@page pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>Baridator:QuestionPage</title>
+<link rel="stylesheet" type="text/css" href="${f:url('/css/sa.css')}" />
+</head>
+
+<body>
+[Q2] メガネをかけてる？<br/><br/>
+
+<s:form>
+<input type="submit" name="glass" value="はい"/><br /><br/>
+<input type="submit" name="noglass" value="いいえ"/><br />
+</s:form>
+
+</body>
+</html>

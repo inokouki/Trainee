@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="1" timestamp="1466570692287" analysisTimestamp="1466570657820" release="">
+  <Project projectName="sa-struts-tutorial">
+    <Jar>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\classes</Jar>
+    <Jar>C:\pleiades\workspace\sa-struts-tutorial\target\test-classes</Jar>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\classes</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\target\test-classes</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\aopalliance-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-beanutils-1.7.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-collections-3.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-digester-1.6.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-el-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-fileupload-1.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-logging-1.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-annotation_1.0_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-ejb_3.0_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-interceptor_3.0_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-jpa_3.0_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-jta_1.1_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\geronimo-jta_1.1_spec-1.0-tsr.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\jakarta-oro-2.0.8.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\javassist-3.4.ga.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\jstl-1.1.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\log4j-1.2.13.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\ognl-2.6.9-patch-20070908.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\poi-3.0-FINAL.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\standard.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\struts-1.2.9.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\antlr.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-validator-1.2.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\lib\geronimo-jsp_2.0_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\lib\geronimo-servlet_2.4_spec-1.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\lib\junit-3.8.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\commons-io-1.3.2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\s2-extension-2.4.44.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\s2-framework-2.4.44.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\s2-tiger-2.4.44.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\workspace\sa-struts-tutorial\src\main\webapp\WEB-INF\lib\sa-struts-1.0.4-sp9.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\pleiades\java\8\jre\lib\rt.jar</AuxClasspathEntry>
+    <SrcDir>C:\pleiades\workspace\sa-struts-tutorial\src\main\resources</SrcDir>
+    <SrcDir>C:\pleiades\workspace\sa-struts-tutorial\src\main\java</SrcDir>
+    <SrcDir>C:\pleiades\workspace\sa-struts-tutorial\src\test\resources</SrcDir>
+    <Cloud id="edu.umd.cs.findbugs.cloud.doNothingCloud" online="false"></Cloud>
+  </Project>
+  <BugInstance type="DM_BOXED_PRIMITIVE_FOR_PARSING" priority="1" rank="16" abbrev="Bx" category="PERFORMANCE" first="1">
+    <Class classname="tutorial.action.AddAction">
+      <SourceLine classname="tutorial.action.AddAction" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+    </Class>
+    <Method classname="tutorial.action.AddAction" name="submit" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.action.AddAction" start="25" end="26" startBytecode="0" endBytecode="82" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="intValue" signature="()I" isStatic="false" role="METHOD_CALLED">
+      <SourceLine classname="java.lang.Integer" start="893" end="893" startBytecode="0" endBytecode="28" sourcefile="Integer.java" sourcepath="java/lang/Integer.java"/>
+    </Method>
+    <Method classname="java.lang.Integer" name="parseInt" signature="(Ljava/lang/String;)I" isStatic="true" role="SHOULD_CALL"/>
+    <SourceLine classname="tutorial.action.AddAction" start="25" end="25" startBytecode="11" endBytecode="11" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+    <SourceLine classname="tutorial.action.AddAction" start="25" end="25" startBytecode="11" endBytecode="11" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.action.AddAction">
+      <SourceLine classname="tutorial.action.AddAction" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+    </Class>
+    <Field classname="tutorial.action.AddAction" name="result" signature="Ljava/lang/Integer;" isStatic="false">
+      <SourceLine classname="tutorial.action.AddAction" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+    </Field>
+    <SourceLine classname="tutorial.action.AddAction" start="25" end="25" startBytecode="31" endBytecode="31" sourcefile="AddAction.java" sourcepath="tutorial/action/AddAction.java"/>
+  </BugInstance>
+  <BugInstance type="NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="14" abbrev="NP" category="STYLE" first="1">
+    <Class classname="tutorial.action.UploadAction">
+      <SourceLine classname="tutorial.action.UploadAction" sourcefile="UploadAction.java" sourcepath="tutorial/action/UploadAction.java"/>
+    </Class>
+    <Method classname="tutorial.action.UploadAction" name="upload" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.action.UploadAction" start="34" end="38" startBytecode="0" endBytecode="116" sourcefile="UploadAction.java" sourcepath="tutorial/action/UploadAction.java"/>
+    </Method>
+    <Field classname="tutorial.form.UploadForm" name="formFiles" signature="[Lorg/apache/struts/upload/FormFile;" isStatic="false">
+      <SourceLine classname="tutorial.form.UploadForm" sourcefile="UploadForm.java" sourcepath="tutorial/form/UploadForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.action.UploadAction" start="35" end="35" startBytecode="21" endBytecode="21" sourcefile="UploadAction.java" sourcepath="tutorial/action/UploadAction.java"/>
+    <SourceLine classname="tutorial.action.UploadAction" start="35" end="35" startBytecode="21" endBytecode="21" sourcefile="UploadAction.java" sourcepath="tutorial/action/UploadAction.java"/>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UuF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ConditionForm">
+      <SourceLine classname="tutorial.form.ConditionForm" sourcefile="ConditionForm.java" sourcepath="tutorial/form/ConditionForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ConditionForm" name="id" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ConditionForm" sourcefile="ConditionForm.java" sourcepath="tutorial/form/ConditionForm.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UuF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ForeachButtonForm">
+      <SourceLine classname="tutorial.form.ForeachButtonForm" sourcefile="ForeachButtonForm.java" sourcepath="tutorial/form/ForeachButtonForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ForeachButtonForm" name="id" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ForeachButtonForm" sourcefile="ForeachButtonForm.java" sourcepath="tutorial/form/ForeachButtonForm.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UuF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ForeachForm">
+      <SourceLine classname="tutorial.form.ForeachForm" sourcefile="ForeachForm.java" sourcepath="tutorial/form/ForeachForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ForeachForm" name="id" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ForeachForm" sourcefile="ForeachForm.java" sourcepath="tutorial/form/ForeachForm.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.RadioForm">
+      <SourceLine classname="tutorial.form.RadioForm" sourcefile="RadioForm.java" sourcepath="tutorial/form/RadioForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.RadioForm" name="radio" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.RadioForm" sourcefile="RadioForm.java" sourcepath="tutorial/form/RadioForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.RadioForm" start="8" end="8" startBytecode="3" endBytecode="3" sourcefile="RadioForm.java" sourcepath="tutorial/form/RadioForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.SelectForm">
+      <SourceLine classname="tutorial.form.SelectForm" sourcefile="SelectForm.java" sourcepath="tutorial/form/SelectForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.SelectForm" name="select" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.SelectForm" sourcefile="SelectForm.java" sourcepath="tutorial/form/SelectForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.SelectForm" start="8" end="8" startBytecode="3" endBytecode="3" sourcefile="SelectForm.java" sourcepath="tutorial/form/SelectForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.TextareaForm">
+      <SourceLine classname="tutorial.form.TextareaForm" sourcefile="TextareaForm.java" sourcepath="tutorial/form/TextareaForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.TextareaForm" name="textarea" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.TextareaForm" sourcefile="TextareaForm.java" sourcepath="tutorial/form/TextareaForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.TextareaForm" start="8" end="8" startBytecode="3" endBytecode="3" sourcefile="TextareaForm.java" sourcepath="tutorial/form/TextareaForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.TilesForm">
+      <SourceLine classname="tutorial.form.TilesForm" sourcefile="TilesForm.java" sourcepath="tutorial/form/TilesForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.TilesForm" name="name" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.TilesForm" sourcefile="TilesForm.java" sourcepath="tutorial/form/TilesForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.TilesForm" start="5" end="5" startBytecode="7" endBytecode="7" sourcefile="TilesForm.java" sourcepath="tutorial/form/TilesForm.java"/>
+  </BugInstance>
+  <BugInstance type="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UwF" category="STYLE" first="1">
+    <Class classname="tutorial.form.UploadForm">
+      <SourceLine classname="tutorial.form.UploadForm" sourcefile="UploadForm.java" sourcepath="tutorial/form/UploadForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.UploadForm" name="formFiles" signature="[Lorg/apache/struts/upload/FormFile;" isStatic="false">
+      <SourceLine classname="tutorial.form.UploadForm" sourcefile="UploadForm.java" sourcepath="tutorial/form/UploadForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.action.UploadAction" start="35" end="35" startBytecode="15" endBytecode="15" sourcefile="UploadAction.java" sourcepath="tutorial/action/UploadAction.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="byteText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="111" end="111" startBytecode="3" endBytecode="3" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="dateText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="117" end="117" startBytecode="39" endBytecode="39" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="doubleRangeText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="123" end="123" startBytecode="75" endBytecode="75" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="doubleText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="116" end="116" startBytecode="33" endBytecode="33" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="emailText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="118" end="118" startBytecode="45" endBytecode="45" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="floatRangeText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="122" end="122" startBytecode="69" endBytecode="69" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="floatText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="115" end="115" startBytecode="27" endBytecode="27" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="intRangeText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="120" end="120" startBytecode="57" endBytecode="57" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="integerText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="113" end="113" startBytecode="15" endBytecode="15" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="longRangeText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="121" end="121" startBytecode="63" endBytecode="63" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="longText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="114" end="114" startBytecode="21" endBytecode="21" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="maxbytelengthText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="127" end="127" startBytecode="99" endBytecode="99" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="maxlengthText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="125" end="125" startBytecode="87" endBytecode="87" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="minbytelengthText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="126" end="126" startBytecode="93" endBytecode="93" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="minlengthText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="124" end="124" startBytecode="81" endBytecode="81" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="phoneText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="128" end="128" startBytecode="105" endBytecode="105" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="shortText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="112" end="112" startBytecode="9" endBytecode="9" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="18" abbrev="UrF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="urlText" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+    <SourceLine classname="tutorial.form.ValidatorForm" start="119" end="119" startBytecode="51" endBytecode="51" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" rank="17" abbrev="UuF" category="STYLE" first="1">
+    <Class classname="tutorial.form.ValidatorForm">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Class>
+    <Field classname="tutorial.form.ValidatorForm" name="validwhen1Text" signature="Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="tutorial.form.ValidatorForm" sourcefile="ValidatorForm.java" sourcepath="tutorial/form/ValidatorForm.java"/>
+    </Field>
+  </BugInstance>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Wed, 22 Jun 2016 09:38:48 +0900" total_classes="42" referenced_classes="95" total_bugs="30" total_size="454" num_packages="2" java_version="1.8.0_74" vm_version="25.74-b02" cpu_seconds="11.00" clock_seconds="34.50" peak_mbytes="667.84" alloc_mbytes="989.88" gc_seconds="0.25" priority_2="29" priority_1="1">
+    <PackageStats package="tutorial.action" total_bugs="4" total_types="25" total_size="279" priority_2="3" priority_1="1">
+      <ClassStats class="tutorial.action.AddAction" sourceFile="AddAction.java" interface="false" size="10" bugs="2" priority_2="1" priority_1="1"/>
+      <ClassStats class="tutorial.action.AjaxAction" sourceFile="AjaxAction.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="tutorial.action.CheckboxAction" sourceFile="CheckboxAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.ClientValidatorAction" sourceFile="ClientValidatorAction.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="tutorial.action.ConditionAction" sourceFile="ConditionAction.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="tutorial.action.DownloadAction" sourceFile="DownloadAction.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="tutorial.action.ForeachAction" sourceFile="ForeachAction.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="tutorial.action.ForeachButtonAction" sourceFile="ForeachButtonAction.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="tutorial.action.ForeachUpdateAction" sourceFile="ForeachUpdateAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.IndexAction" sourceFile="IndexAction.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="tutorial.action.LogoutAction" sourceFile="LogoutAction.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="tutorial.action.MultiboxAction" sourceFile="MultiboxAction.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="tutorial.action.MultiselectAction" sourceFile="MultiselectAction.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="tutorial.action.NestedForeachAction" sourceFile="NestedForeachAction.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="tutorial.action.NestedForeachUpdateAction" sourceFile="NestedForeachUpdateAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.ProtectAction" sourceFile="ProtectAction.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="tutorial.action.RadioAction" sourceFile="RadioAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.RedirectAction" sourceFile="RedirectAction.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="tutorial.action.SelectAction" sourceFile="SelectAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.SessionAction" sourceFile="SessionAction.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="tutorial.action.TextareaAction" sourceFile="TextareaAction.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="tutorial.action.TilesAction" sourceFile="TilesAction.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="tutorial.action.TokenAction" sourceFile="TokenAction.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="tutorial.action.UploadAction" sourceFile="UploadAction.java" interface="false" size="19" bugs="2" priority_2="2"/>
+      <ClassStats class="tutorial.action.ValidatorAction" sourceFile="ValidatorAction.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="tutorial.form" total_bugs="26" total_types="17" total_size="175" priority_2="26">
+      <ClassStats class="tutorial.form.AddForm" sourceFile="AddForm.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="tutorial.form.CheckboxForm" sourceFile="CheckboxForm.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="tutorial.form.ClientValidatorForm" sourceFile="ClientValidatorForm.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="tutorial.form.ConditionForm" sourceFile="ConditionForm.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.ForeachButtonForm" sourceFile="ForeachButtonForm.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.ForeachForm" sourceFile="ForeachForm.java" interface="false" size="4" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.ForeachUpdateForm" sourceFile="ForeachUpdateForm.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="tutorial.form.MultiboxForm" sourceFile="MultiboxForm.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="tutorial.form.MultiselectForm" sourceFile="MultiselectForm.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="tutorial.form.NestedForeachUpdateForm" sourceFile="NestedForeachUpdateForm.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="tutorial.form.RadioForm" sourceFile="RadioForm.java" interface="false" size="7" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.SelectForm" sourceFile="SelectForm.java" interface="false" size="7" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.SessionForm" sourceFile="SessionForm.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="tutorial.form.TextareaForm" sourceFile="TextareaForm.java" interface="false" size="7" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.TilesForm" sourceFile="TilesForm.java" interface="false" size="5" bugs="1" priority_2="1"/>
+      <ClassStats class="tutorial.form.UploadForm" sourceFile="UploadForm.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="tutorial.form.ValidatorForm" sourceFile="ValidatorForm.java" interface="false" size="44" bugs="19" priority_2="19"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="de.tobject.findbugs.builder.FindBugs2Eclipse" totalMilliseconds="1681" invocations="2" avgMicrosecondsPerInvocation="840743" maxMicrosecondsPerInvocation="1336589" standardDeviationMircosecondsPerInvocation="495846"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="1117" invocations="449" avgMicrosecondsPerInvocation="2488" maxMicrosecondsPerInvocation="33682" standardDeviationMircosecondsPerInvocation="4737"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="254" invocations="446" avgMicrosecondsPerInvocation="570" maxMicrosecondsPerInvocation="36436" standardDeviationMircosecondsPerInvocation="2093"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="70" invocations="125" avgMicrosecondsPerInvocation="564" maxMicrosecondsPerInvocation="52363" standardDeviationMircosecondsPerInvocation="4664"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="65" invocations="34" avgMicrosecondsPerInvocation="1935" maxMicrosecondsPerInvocation="26312" standardDeviationMircosecondsPerInvocation="4915"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History>
+    <AppVersion sequence="0" timestamp="1466570692287" release="" codeSize="0" numClasses="0"/>
+  </History>
+</BugCollection>

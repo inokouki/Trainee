@@ -1,0 +1,19 @@
+<%@page pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>Baridator:QuestionPage</title>
+<link rel="stylesheet" type="text/css" href="${f:url('/css/sa.css')}" />
+</head>
+
+<body>
+test
+
+<s:form>
+<input type="submit" name="woman" value="はい"/><br />
+<input type="submit" name="man" value="いいえ"/><br />
+</s:form>
+
+<a href="baridator/"><button>Baridatorトップ</button></a>
+
+</body>
+</html>

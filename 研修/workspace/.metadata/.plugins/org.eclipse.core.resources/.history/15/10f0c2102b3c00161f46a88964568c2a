@@ -1,0 +1,11 @@
+<%@page pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>Baridator:QuestionPage</title>
+<link rel="stylesheet" type="text/css" href="${f:url('/css/sa.css')}" />
+</head>
+
+<body>
+ask1 test
+</body>
+</html>

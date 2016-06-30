@@ -1,0 +1,10 @@
+<%@page pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>Tutorial: Select</title>
+<link rel="stylesheet" type="text/css" href="${f:url('/css/sa.css')}" />
+</head>
+<body>
+start test
+</body>
+</html>

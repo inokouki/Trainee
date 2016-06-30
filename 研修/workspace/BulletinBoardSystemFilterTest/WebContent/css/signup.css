@@ -1,0 +1,11 @@
+html {
+	background-image: url(8RPHFpQk.png);
+	background-position: center;
+	font-weight: bold;
+}
+h3 {
+	color: #b80000;
+}
+div.errorMessages {
+	line-height: 50%;
+}

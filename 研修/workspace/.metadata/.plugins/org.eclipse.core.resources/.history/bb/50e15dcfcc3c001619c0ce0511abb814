@@ -1,0 +1,25 @@
+package tutorial.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Baridator {
+
+    @Id
+    @GeneratedValue
+    public Integer id;
+
+    public String name;
+
+    public String image;
+
+    public String question1;
+
+    public String question2;
+
+    public String question3;
+
+    public String question4;
+}

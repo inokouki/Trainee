@@ -1,0 +1,189 @@
+package tutorial.action;
+
+//import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.seasar.extension.jdbc.JdbcManager;
+//import org.seasar.framework.container.SingletonS2Container;
+//import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.struts.annotation.ActionForm;
+import org.seasar.struts.annotation.Execute;
+
+//import tutorial.entity.Baridator;
+import tutorial.form.BaridatorForm;
+
+
+
+public class BaridatorAction {
+
+    public JdbcManager jdbcManager;
+    public String searchname = "lol";
+    public String[] answer = new String[4];
+
+    @ActionForm
+    @Resource
+    private BaridatorForm BaridatorForm;
+
+    @Execute(validator = false)
+    public String index() {
+        BaridatorForm.initialized();
+        return "index.jsp";
+    }
+
+    @Execute(validator = false)
+    public String question() {
+        return "ask0.jsp";
+    }
+
+    @Execute(validator = false)
+    public String woman() {
+        answer[0] = "woman";
+        BaridatorForm.answerform[0] = "woman";
+        return "ask1.jsp";
+    }
+
+    @Execute(validator = false)
+    public String man() {
+        answer[0] = "man";
+        BaridatorForm.answerform[0] = "man";
+        return "ask1.jsp";
+    }
+
+    @Execute(validator = false)
+    public String glass() {
+        answer[1] = "glass";
+        BaridatorForm.answerform[1] = "glass";
+        return "ask2.jsp";
+    }
+
+    @Execute(validator = false)
+    public String noglass() {
+        answer[1] = "noglass";
+        BaridatorForm.answerform[1] = "noglass";
+        return "ask2.jsp";
+    }
+
+    @Execute(validator = false)
+    public String freshman() {
+        answer[2] = "freshman";
+        BaridatorForm.answerform[2] = "freshman";
+        return "ask3.jsp";
+    }
+
+    @Execute(validator = false)
+    public String staff() {
+        answer[2] = "staff";
+        BaridatorForm.answerform[2] = "staff";
+        return "ask3.jsp";
+    }
+
+    @Execute(validator = false)
+    public String testyes() {
+        answer[3] = "yes";
+        BaridatorForm.answerform[3] = "yes";
+        getUser();
+        return "result.jsp";
+    }
+
+    @Execute(validator = false)
+    public String testno() {
+        answer[3] = "no";
+        BaridatorForm.answerform[3] = "no";
+        getUser();
+        return "result.jsp";
+    }
+
+    public void getUser() {
+
+        searchname = "hahaha";
+
+        if (answer[0] == "man") {
+
+            if (answer[1] == "glass") {
+
+                if (answer[2] == "staff") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "山田さん";}
+                    if (answer[3] == "no") {
+                        searchname = "村上さん";}
+                }
+
+                if (answer[2] == "freshman") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "man&glass&freshman&yes";}
+                    if (answer[3] == "no") {
+                        searchname = "man&glass&freshman&no";}
+                }
+
+            }
+
+            if (answer[1] == "noglass") {
+
+                if (answer[2] == "staff") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "村田さん";}
+                    if (answer[3] == "no") {
+                        searchname = "飯塚さん";}
+                }
+
+                if (answer[2] == "freshman") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "man&noglass&freshman&yes";}
+                    if (answer[3] == "no") {
+                        searchname = "man&noglass&freshman&no";}
+                }
+            }
+
+        }
+
+        if (answer[0] == "woman") {
+
+            if (answer[1] == "glass") {
+
+                if (answer[2] == "staff") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "山田さん";}
+                    if (answer[3] == "no") {
+                        searchname = "村上さん";}
+                }
+
+                if (answer[2] == "freshman") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "man&glass&freshman&yes";}
+                    if (answer[3] == "no") {
+                        searchname = "man&glass&freshman&no";}
+                }
+
+            }
+
+            if (answer[2] == "noglass") {
+
+                if (answer[2] == "staff") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "村田さん";}
+                    if (answer[3] == "no") {
+                        searchname = "飯塚さん";}
+                }
+
+                if (answer[2] == "freshman") {
+
+                    if (answer[3] == "yes") {
+                        searchname = "man&noglass&freshman&yes";}
+                    if (answer[3] == "no") {
+                        searchname = "man&noglass&freshman&no";}
+                }
+            }
+
+        }
+
+    }
+
+}

@@ -1,0 +1,43 @@
+package tutorial.action;
+
+import javax.annotation.Resource;
+
+import org.seasar.struts.annotation.ActionForm;
+import org.seasar.struts.annotation.Execute;
+
+import tutorial.form.BaridatorForm;
+
+
+
+public class Ask1Action {
+
+    @ActionForm
+    @Resource
+    protected BaridatorForm BaridatorForm;
+
+    @Execute(validator = false)
+    public String index() {
+        System.out.println("ask1[array]:" + BaridatorForm.answer);
+        return "index.jsp";
+    }
+
+    @Execute(validator = false)
+    public String question() {
+        System.out.println("ask1:question");
+        return "ask1.jsp";
+    }
+
+    @Execute(validator = false)
+    public String woman() {
+        System.out.println("ask1:woman");
+        BaridatorForm.answer[0] = "woman";
+        return "ask1.jsp";
+    }
+
+    @Execute(validator = false)
+    public String man() {
+        System.out.println("ask1:man");
+        BaridatorForm.answer[0] = "man";
+        return "ask1.jsp";
+    }
+}

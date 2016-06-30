@@ -1,0 +1,27 @@
+package tutorial.action;
+
+import javax.annotation.Resource;
+
+import org.seasar.struts.annotation.ActionForm;
+import org.seasar.struts.annotation.Execute;
+
+import tutorial.form.BaridatorForm;
+
+
+
+public class Ask1Action {
+
+    @ActionForm
+    @Resource
+    protected BaridatorForm BaridatorForm;
+
+    @Execute(validator = false)
+    public String index() {
+        return "index.jsp";
+    }
+
+    @Execute(validator = false)
+    public String question() {
+        return "ask1.jsp";
+    }
+}

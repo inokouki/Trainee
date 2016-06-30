@@ -1,0 +1,24 @@
+package tutorial.service;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.seasar.struts.annotation.ActionForm;
+
+import tutorial.dto.BaridatorDto;
+import tutorial.entity.Baridator;
+import tutorial.form.BaridatorForm;
+
+public class BaridatorService {
+
+    @ActionForm
+    @Resource
+    protected BaridatorForm BaridatorForm;
+
+    public List<BaridatorForm> SearchMember() {
+        List<BaridatorForm> memberlist = Baridator.select();
+
+        return memberlist;
+    }
+}

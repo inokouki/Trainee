@@ -1,0 +1,27 @@
+package tutorial.dto;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.seasar.struts.annotation.ActionForm;
+
+import tutorial.form.BaridatorForm;
+
+public class BaridatorDto {
+
+    @ActionForm
+    @Resource
+    protected BaridatorForm BaridatorForm;
+
+    public static List<BaridatorForm> select() {
+
+        StringBuilder sql = null;
+
+        sql.append("SELECT * FROM seasar2tuto.baridators ");
+
+        List<BaridatorForm> list = null ;
+
+        return list;
+    }
+}

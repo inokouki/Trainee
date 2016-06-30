@@ -1,0 +1,25 @@
+<%@page pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>Baridator:QuestionPage</title>
+<link rel="stylesheet" type="text/css" href="${f:url('/css/sa.css')}" />
+</head>
+
+<body>
+Finish!!!!<br/><br/>
+
+あなたが思い浮かべた人って...
+<p>${f:h(searchname)}</p>　ですか？<br/><br/>
+
+
+1:<p>${f:h(answer)}</p><br/>
+2:<p>${f:h(BaridatorForm.answerform)}</p><br/>
+3:<p>${f:h(result)}</p><br/>
+4:<p>${askmap.question1}</p>,<p>${askmap.question2}</p>,<p>${askmap.question3}</p>,<p>${askmap.question4}</p>
+
+<s:form>
+<input type="submit" name="index" value="トップページに戻る">
+</s:form>
+
+</body>
+</html>

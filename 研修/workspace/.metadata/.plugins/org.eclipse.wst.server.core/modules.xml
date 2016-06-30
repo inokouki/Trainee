@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:spring-datasource-basic-master" serverId="spring"/>
+  <module moduleId="org.eclipse.jst.jee.server:BulletinBoardSystemFilterTest" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:Chapter4" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:Chapter3" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:Kadai4" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:SpringKenshu" serverId="ローカル・ホスト の Tomcat7 (Java7)"/>
+  <module moduleId="org.eclipse.jst.jee.server:BulletinBoardSystem" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:Chapter6" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:kadai4" serverId="ローカル・ホスト の Tomcat8 (Java8)"/>
+  <module moduleId="org.eclipse.jst.jee.server:SpringBoardSystem" serverId="spring"/>
+</modules>

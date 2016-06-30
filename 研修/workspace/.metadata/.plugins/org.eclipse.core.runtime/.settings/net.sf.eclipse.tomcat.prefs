@@ -1,0 +1,8 @@
+contextsDir=C\:/pleiades/tomcat/8/conf/Catalina/localhost
+eclipse.preferences.version=1
+managerUrl=http\://localhost\:8080/manager
+projectsInSourcePath=Chapter2;Chapter3;Chapter4;Chapter5;Chapter6;Example42p;Kadai4;Servers;episode7;example2;firstexample;for;hairetu;iffor;kadai3;
+tomcatConfigFile=C\:/pleiades/tomcat/8/conf/server.xml
+tomcatDir=C\:/pleiades/tomcat/8
+tomcatJRE=1223692840796
+tomcatVersion=tomcatV8

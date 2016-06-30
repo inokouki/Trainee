@@ -1,0 +1,23 @@
+html {
+	background-image: url(8RPHFpQk.png);
+	background-position: center;
+	font-weight: bold;
+}
+textarea {
+	solid: 3px black;
+
+}
+h2 {
+	color: #b80000;
+}
+div {
+	width: 1300px;
+ 	word-wrap: break-word;
+}
+div.errorMessages {
+	line-height: 50%;
+}
+
+div.successmessages {
+	color: blue;
+}
